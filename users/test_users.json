@@ -1,0 +1,14 @@
+[
+  {
+    "name": "End-to-end TestUser",
+    "username": "test-user-end-to-end@test.no"
+  },
+  {
+    "name": "Withauthor TestUser",
+    "username": "test-user-with-author@test.no"
+  },
+  {
+    "name": "Admin TestUser",
+    "username": "test-user-admin@test.no"
+  }
+]
