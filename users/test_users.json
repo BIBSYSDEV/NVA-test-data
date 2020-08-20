@@ -1,14 +1,26 @@
 [
   {
     "name": "End-to-end TestUser",
-    "username": "test-user-end-to-end@test.no"
+    "username": "test-user-end-to-end@test.no",
+    "role": "Registrator",
+    "author": false
   },
   {
     "name": "Withauthor TestUser",
-    "username": "test-user-with-author@test.no"
+    "username": "test-user-with-author@test.no",
+    "role": "Registrator",
+    "author": true
   },
   {
-    "name": "Admin TestUser",
-    "username": "test-user-admin@test.no"
+    "name": "Appadministrator TestUser",
+    "username": "test-user-admin@test.no",
+    "role": "Application Administrator",
+    "author": false
+  },
+  {
+    "name": "Curator TestUser",
+    "username": "test-user-curator@test.no",
+    "role": "Curator",
+    "author": true
   }
 ]

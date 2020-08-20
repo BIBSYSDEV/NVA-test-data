@@ -5,9 +5,12 @@ import copy
 
 USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
 if not USER_POOL_ID:
-    quit('Set AWS_USER_POOL_ID to correct User Pool Id')
+    quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
 
-with open('./users/user.json') as json_file:
+user_attribute_file_name = './users/user.json'
+test_users_file_name = './users/test_users.json'
+
+with open(user_attribute_file_name) as json_file:
     user = json.load(json_file)
 
     client = boto3.client('cognito-idp')
@@ -19,10 +22,14 @@ with open('./users/user.json') as json_file:
                     'Value'] == 'TestOrg':
                 cognito_test_users.append(cognito_user['Username'])
     for cognito_test_username in cognito_test_users:
-        response = client.admin_delete_user(UserPoolId=USER_POOL_ID,
-                                            Username=cognito_test_username)
+        try:
+            response = client.admin_delete_user(UserPoolId=USER_POOL_ID,
+                                                Username=cognito_test_username)
+        except:
+            print('Error deleting users')
+            pass
 
-    with open('./users/test_users.json') as test_users_file:
+    with open(test_users_file_name) as test_users_file:
 
         test_users = json.load(test_users_file)
         for test_user in test_users:
@@ -32,7 +39,7 @@ with open('./users/user.json') as json_file:
 
             for attribute in user_attributes:
                 if attribute['Name'] == 'custom:identifiers':
-                    attribute['Value'] = 'feide:%s' % username
+                    attribute['Value'] = 'feide:{}'.format(username)
                 if attribute['Name'] == 'custom:feideId' or attribute[
                         'Name'] == 'email':
                     attribute['Value'] = username
@@ -40,8 +47,13 @@ with open('./users/user.json') as json_file:
                         'Name'] == 'custom:commonName':
                     attribute['Value'] = name
 
-            response = client.admin_create_user(UserPoolId=USER_POOL_ID,
-                                                Username=username,
-                                                UserAttributes=user_attributes,
-                                                MessageAction='SUPPRESS')
-            print(response)
+            try:
+                print('Creating {}'.format(username))
+                response = client.admin_create_user(
+                    UserPoolId=USER_POOL_ID,
+                    Username=username,
+                    UserAttributes=user_attributes,
+                    MessageAction='SUPPRESS')
+            except:
+                print('Error creating users')
+                pass
