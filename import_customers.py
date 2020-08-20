@@ -22,14 +22,23 @@ def delete_item(identifier):
     return response
 
 
-def put_item(administrationId, archiveName, feideOrgnizationId, identifier):
+def put_item(administration_id, archive_name, feide_orgnization_id,
+             identifier):
 
     with open(customer_template_file) as customer:
         customer_template = json.load(customer)
         new_customer = copy.deepcopy(customer_template)
-        new_customer['administrationId']['S'] = administrationId
-        new_customer['archiveName']['S'] = archiveName
-        new_customer['feideOrgnizationId']['S'] = feideOrgnizationId
+        new_customer['administrationId']['S'] = administration_id
+        new_customer['archiveName']['S'] = archive_name
+        new_customer['feideOrgnizationId']['S'] = feide_orgnization_id
         new_customer['identifier']['S'] = identifier
 
-        response.put_item(TableName='nva_customers', Item=new_customer)
+        response = client.put_item(TableName='nva_customers',
+                                   Item=new_customer)
+        return response
+
+
+test_administation_id = 'test@test.no'
+test_archive_name = 'test archive'
+test_feide_org_id = '0987654321'
+test_identifier = ''

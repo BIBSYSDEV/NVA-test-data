@@ -1,6 +1,6 @@
 {
   "administrationId": {
-    "S": "en@test.no"
+    "S": "test-user-admin@test.no"
   },
   "archiveName": {
     "S": "Test Archive"
@@ -12,22 +12,22 @@
     "S": "2020-01-01T00:00:00.000Z"
   },
   "displayName": {
-    "S": "Norges teknisk-naturvitenskapelige universitet"
+    "S": "Unit – Direktoratet for IKT og fellestjenester i høyere utdanning og forskning"
   },
   "feideOrganizationId": {
     "S": "1234567890"
   },
   "identifier": {
-    "S": "07ee4a92-5ad7-43bd-9749-7d1af6441887"
+    "S": "######################"
   },
   "institutionDns": {
-    "S": "ntnu.no"
+    "S": "test.no"
   },
   "name": {
-    "S": "Norges teknisk-naturvitenskapelige universitet"
+    "S": "Unit – Direktoratet for IKT og fellestjenester i høyere utdanning og forskning"
   },
   "shortName": {
-    "S": "NTNU"
+    "S": "UNIT"
   },
   "type": {
     "S": "Customer"
