@@ -1,0 +1,35 @@
+{
+  "administrationId": {
+    "S": "en@test.no"
+  },
+  "archiveName": {
+    "S": "Test Archive"
+  },
+  "cname": {
+    "S": "test"
+  },
+  "createdDate": {
+    "S": "2020-01-01T00:00:00.000Z"
+  },
+  "displayName": {
+    "S": "Norges teknisk-naturvitenskapelige universitet"
+  },
+  "feideOrganizationId": {
+    "S": "1234567890"
+  },
+  "identifier": {
+    "S": "07ee4a92-5ad7-43bd-9749-7d1af6441887"
+  },
+  "institutionDns": {
+    "S": "ntnu.no"
+  },
+  "name": {
+    "S": "Norges teknisk-naturvitenskapelige universitet"
+  },
+  "shortName": {
+    "S": "NTNU"
+  },
+  "type": {
+    "S": "Customer"
+  }
+}
