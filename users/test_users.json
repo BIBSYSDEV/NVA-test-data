@@ -16,5 +16,11 @@
     "username": "test-user-admin@test.no",
     "role": "Application Administrator",
     "author": false
+  },
+  {
+    "name": "Curator TestUser",
+    "username": "test-user-curator@test.no",
+    "role": "Curator",
+    "author": true
   }
 ]
