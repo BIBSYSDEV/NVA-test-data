@@ -26,7 +26,6 @@ def delete_customers():
                 Key={'identifier': {
                     'S': identifier
                 }})
-            print(response)
     return
 
 
@@ -45,7 +44,6 @@ with open(customer_template_file_name) as customer_template_file:
 
         test_customers = json.load(test_customers_file)
         for test_customer in test_customers:
-            print(test_customer)
             new_customer = copy.deepcopy(customer_template)
             new_customer['administrationId']['S'] = test_customer[
                 'administration_id']
