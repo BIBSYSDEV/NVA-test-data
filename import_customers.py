@@ -6,10 +6,11 @@ import uuid
 client = boto3.client('dynamodb')
 customer_template_file_name = './customers/institution.json'
 test_customers_file_name = './customers/test_institutions.json'
+customer_tablename = 'nva_customers'
 
 
 def scan_customers():
-    response = client.scan(TableName='nva_customers')
+    response = client.scan(TableName=customer_tablename)
 
     return response['Items']
 
@@ -21,7 +22,7 @@ def delete_customers():
         identifier = customer['identifier']['S']
         if identifier.startswith('test_'):
             response = client.delete_item(
-                TableName='nva_customers',
+                TableName=customer_tablename,
                 Key={'identifier': {
                     'S': identifier
                 }})
@@ -31,7 +32,7 @@ def delete_customers():
 
 def put_item(new_customer):
 
-    response = client.put_item(TableName='nva_customers', Item=new_customer)
+    response = client.put_item(TableName=customer_tablename, Item=new_customer)
     return response
 
 
