@@ -1,0 +1,67 @@
+{
+  "createdDate": "2020-08-18T13:34:13.357095Z",
+  "entityDescription": {
+    "contributors": [
+      {
+        "affiliations": [],
+        "correspondingAuthor": false,
+        "identity": {
+          "arpId": "1592297922684",
+          "name": "Serussi, Sarah",
+          "type": "Identity"
+        },
+        "sequence": 1,
+        "type": "Contributor"
+      }
+    ],
+    "date": {
+      "type": "PublicationDate"
+    },
+    "language": "",
+    "mainTitle": "tre",
+    "reference": {
+      "doi": "",
+      "publicationContext": {
+        "level": "LEVEL_1",
+        "openAccess": false,
+        "peerReviewed": false,
+        "publisher": "Old Testament Society of South Africa",
+        "type": "Degree",
+        "url": "http://www.otwsa-otssa.co.za/index_frame.htm"
+      },
+      "publicationInstance": {
+        "peerReviewed": false,
+        "type": "DegreeBachelor"
+      },
+      "type": "Reference"
+    },
+    "tags": [],
+    "type": "EntityDescription"
+  },
+  "fileSet": {
+    "files": [
+      {
+        "administrativeAgreement": true,
+        "identifier": "bbe3faee-b28b-4e92-b94e-4bd0ef198bf7",
+        "mimeType": "image/png",
+        "name": "Skjermbilde 2020-08-14 kl. 13.13.59.png",
+        "publisherAuthority": false,
+        "size": 206026,
+        "type": "File"
+      }
+    ],
+    "type": "FileSet"
+  },
+  "identifier": "c3b2c953-d35a-498f-9ca5-72eef4f26707",
+  "modifiedDate": "2020-08-19T11:55:29.167243Z",
+  "owner": "sase@unit.no",
+  "publishedDate": "2020-08-19T11:55:29.167229Z",
+  "publisher": {
+    "id": "https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934",
+    "type": "Organization"
+  },
+  "publisherId": "https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934",
+  "publisherOwnerDate": "https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934#sase@unit.no#2020-08-19T11:55:29.167243Z",
+  "status": "Published",
+  "type": "Publication"
+}
