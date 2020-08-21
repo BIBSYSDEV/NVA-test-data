@@ -18,7 +18,6 @@ def scan_customers():
 def delete_customers():
     customers = scan_customers()
     for customer in customers:
-        print(customer['identifier']['S'])
         identifier = customer['identifier']['S']
         if identifier.startswith('test_'):
             response = client.delete_item(
