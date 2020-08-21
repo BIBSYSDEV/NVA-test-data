@@ -45,13 +45,19 @@ with open(publication_template_file_name) as publication_template_file:
         test_publications = json.load(test_publications_file)
         for test_publication in test_publications:
             new_publication = copy.deepcopy(publication_template)
-            new_publication['administrationId']['S'] = test_publication[
-                'administration_id']
-            new_publication['archiveName']['S'] = test_publication[
-                'archive_name']
-            new_publication['feideOrganizationId']['S'] = test_publication[
-                'feide_orgnization_id']
-            new_publication['identifier']['S'] = 'test_{}'.format(
-                str(uuid.uuid4()))
+            new_publication['entityDescription']['M']['reference']['M']['publicationContext']['M']['type']['S'] 
+                = test_publication['publication_type']
+            new_publication['entityDescription']['M']['reference']['M']['publicationInstance']['M']['type']['S'] 
+                = test_publication['publication_subtype']
+            new_publication['entityDescription']['M']['reference']['M']['publicationInstance']['M']['type']['S'] 
+                = test_publication['publication_subtype']
+            new_publication['fileSet']['M']['files']['L'][0]['M']['identifier']['S'] 
+                = test_publication['file_identifier']
+            new_publication['fileSet']['M']['files']['L'][0]['M']['name']['S'] 
+                = test_publication['file_name']
+            new_publication['owner']['S'] 
+                = test_publication['owner']
+            new_publication['status']['S']
+                = test_publication['status']
 
             result = put_item(new_publication)
