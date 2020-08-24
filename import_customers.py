@@ -27,6 +27,24 @@ def delete_customers():
                 }})
     return
 
+def create_customers():
+    with open(customer_template_file_name) as customer_template_file:
+        customer_template = json.load(customer_template_file)
+
+        with open(test_customers_file_name) as test_customers_file:
+
+            test_customers = json.load(test_customers_file)
+            for test_customer in test_customers:
+                new_customer = copy.deepcopy(customer_template)
+                new_customer['administrationId']['S'] = test_customer[
+                    'administration_id']
+                new_customer['archiveName']['S'] = test_customer['archive_name']
+                new_customer['feideOrganizationId']['S'] = test_customer[
+                    'feide_orgnization_id']
+                new_customer['identifier']['S'] = 'test_{}'.format(
+                    str(uuid.uuid4()))
+
+                result = put_item(new_customer)
 
 def put_item(new_customer):
 
@@ -35,21 +53,4 @@ def put_item(new_customer):
 
 
 delete_customers()
-
-with open(customer_template_file_name) as customer_template_file:
-    customer_template = json.load(customer_template_file)
-
-    with open(test_customers_file_name) as test_customers_file:
-
-        test_customers = json.load(test_customers_file)
-        for test_customer in test_customers:
-            new_customer = copy.deepcopy(customer_template)
-            new_customer['administrationId']['S'] = test_customer[
-                'administration_id']
-            new_customer['archiveName']['S'] = test_customer['archive_name']
-            new_customer['feideOrganizationId']['S'] = test_customer[
-                'feide_orgnization_id']
-            new_customer['identifier']['S'] = 'test_{}'.format(
-                str(uuid.uuid4()))
-
-            result = put_item(new_customer)
+create_customers()

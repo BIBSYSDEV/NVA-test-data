@@ -5,9 +5,7 @@
   "entityDescription": {
     "M": {
       "contributors": {
-        "L": [
-
-        ]
+        "L": []
       },
       "date": {
         "M": {
@@ -60,14 +58,15 @@
         }
       },
       "tags": {
-        "L": [
-
-        ]
+        "L": []
       },
       "type": {
         "S": "EntityDescription"
       }
     }
+  },
+  "publicationType": {
+    "S": "####################"
   },
   "fileSet": {
     "M": {
@@ -131,7 +130,7 @@
     "S": "https://api.cristin.no/v2/institutions/20202#test@test.no#2020-01-01T00:00:00.000000Z"
   },
   "status": {
-    "S": "####################"
+    "S": "Draft"
   },
   "type": {
     "S": "Publication"
