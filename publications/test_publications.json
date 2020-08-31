@@ -1,0 +1,11 @@
+[
+  {
+    "publication_type": "JournalContent",
+    "publication_context_type": "Journal",
+    "publication_instance_type": "JournalArticle",
+    "file_identifier": "lorem_ipsum.txt",
+    "file_name": "lorem_ipsum.txt",
+    "owner": "test@test.no",
+    "status": "Draft"
+  }
+]

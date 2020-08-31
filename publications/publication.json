@@ -1,0 +1,138 @@
+{
+  "createdDate": {
+    "S": "2020-01-01T00:00:00.000000Z"
+  },
+  "entityDescription": {
+    "M": {
+      "contributors": {
+        "L": []
+      },
+      "date": {
+        "M": {
+          "type": {
+            "S": "PublicationDate"
+          }
+        }
+      },
+      "language": {
+        "S": ""
+      },
+      "reference": {
+        "M": {
+          "doi": {
+            "S": ""
+          },
+          "publicationContext": {
+            "M": {
+              "openAccess": {
+                "BOOL": false
+              },
+              "peerReviewed": {
+                "BOOL": false
+              },
+              "type": {
+                "S": "####################"
+              }
+            }
+          },
+          "publicationInstance": {
+            "M": {
+              "pages": {
+                "M": {
+                  "type": {
+                    "S": "Range"
+                  }
+                }
+              },
+              "peerReviewed": {
+                "BOOL": false
+              },
+              "type": {
+                "S": "####################"
+              }
+            }
+          },
+          "type": {
+            "S": "Reference"
+          }
+        }
+      },
+      "tags": {
+        "L": []
+      },
+      "type": {
+        "S": "EntityDescription"
+      }
+    }
+  },
+  "publicationType": {
+    "S": "####################"
+  },
+  "fileSet": {
+    "M": {
+      "files": {
+        "L": [
+          {
+            "M": {
+              "administrativeAgreement": {
+                "BOOL": false
+              },
+              "identifier": {
+                "S": "####################"
+              },
+              "mimeType": {
+                "S": "text/plain"
+              },
+              "name": {
+                "S": "####################"
+              },
+              "publisherAuthority": {
+                "BOOL": false
+              },
+              "size": {
+                "N": "1682"
+              },
+              "type": {
+                "S": "File"
+              }
+            }
+          }
+        ]
+      },
+      "type": {
+        "S": "FileSet"
+      }
+    }
+  },
+  "identifier": {
+    "S": "07d648a6-bdf6-4359-8ac0-b59858ebca0f"
+  },
+  "modifiedDate": {
+    "S": "2020-01-01T00:00:00.000000Z"
+  },
+  "owner": {
+    "S": "####################"
+  },
+  "publisher": {
+    "M": {
+      "id": {
+        "S": "https://api.cristin.no/v2/institutions/20202"
+      },
+      "type": {
+        "S": "Organization"
+      }
+    }
+  },
+  "publisherId": {
+    "S": "https://api.cristin.no/v2/institutions/20202"
+  },
+  "publisherOwnerDate": {
+    "S": "https://api.cristin.no/v2/institutions/20202#test@test.no#2020-01-01T00:00:00.000000Z"
+  },
+  "status": {
+    "S": "Draft"
+  },
+  "type": {
+    "S": "Publication"
+  }
+}
