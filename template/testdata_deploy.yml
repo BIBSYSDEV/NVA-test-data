@@ -174,7 +174,7 @@ Resources:
                   - "cognito-idp:AdminInitiateAuth"
                   - "cognito-idp:AdminCreateUser"
                   - "cognito-idp:AdminDeleteUser"
-                  - "cognito-idp:ListUser"
+                  - "cognito-idp:ListUsers"
                 Resource: "*"
         - PolicyName: dynamoPolicy
           PolicyDocument:
