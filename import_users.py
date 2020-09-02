@@ -5,7 +5,7 @@ import copy
 
 def run():
     print('users...')
-    USER_POOL_ID = os.environ['AWS_USER_POOLS_ID']
+    USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
     if not USER_POOL_ID:
         quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
 

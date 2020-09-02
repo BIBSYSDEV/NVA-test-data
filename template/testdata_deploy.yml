@@ -49,10 +49,6 @@ Resources:
         Location:
           Ref: ArtifactStoreBucket
       RoleArn: !GetAtt PipelineRole.Arn
-      Parameters:
-        CognitoIdentityPoolId: !ImportValue CognitoIdentityPoolId
-        UserPoolId: !ImportValue CognitoUserPoolId
-        UserPoolAppClientId: !ImportValue CognitoUserPoolAppClientId
       Stages:
         - Name: Source
           Actions:
@@ -82,9 +78,9 @@ Resources:
               Configuration:
                 ProjectName: !GetAtt CodeBuildProject.Arn
                 EnvironmentVariables:
-                  - AWS_COGNITO_IDENTITY_POOL_ID: !Ref CognitoIdentityPoolId
-                  - AWS_USER_POOL_ID: !Ref UserPoolId
-                  - AWS_USER_POOL_WEB_CLIENT_ID: !Ref UserPoolAppClientId
+                  - AWS_COGNITO_IDENTITY_POOL_ID: !ImportValue CognitoIdentityPoolId
+                  - AWS_USER_POOL_ID: !ImportValue CognitoUserPoolId
+                  - AWS_USER_POOL_WEB_CLIENT_ID: !ImportValue CognitoUserPoolAppClientId
               InputArtifacts:
                 - Name: SourceArtifact
               OutputArtifacts:
