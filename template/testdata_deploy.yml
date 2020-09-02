@@ -9,22 +9,25 @@ Parameters:
     Description: OAuth token used by AWS CodePipeline to connect to GitHub
     NoEcho: true
     Type: String
+    Default: "{{resolve:secretsmanager:githubtoken:SecretString}}"
   GitHubOwner:
     Description: GitHub username owning the repo
     Type: String
+    Default: BIBSYSDEV
   GitHubRepo:
     Description: GitHub repo name
     Type: String
+    Default: NVA-test-data
   GitHubBranch:
     Description: GitHub repo branch name. It defaults to master if not specified.
     Type: String
-    Default: master
+    Default: NP-1406-create-build-for-testdata-creation-in-AWS
 
 Resources:
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
-      ServiceRole: !GetAtt CodeBuilServiceRole.Arn
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Artifacts:
         Type: CODEPIPELINE
       Environment:
@@ -106,13 +109,6 @@ Resources:
                 Resource:
                   - !Sub ${ArtifactStoreBucket.Arn}/*
               - Action:
-                  - "s3:PutObject"
-                  - "s3:GetObject"
-                  - "s3:GetObjectVersion"
-                Effect: Allow
-                Resource:
-                  - !Sub arn:aws:s3:::${FrontendBucketName}/*
-              - Action:
                   - "codebuild:StartBuild"
                   - "codebuild:BatchGetBuilds"
                 Effect: Allow
@@ -190,3 +186,8 @@ Resources:
                   - "dynamodb:DeleteItem"
                   - "dynamodb:PutItem"
                 Resource: "*"
+  ArtifactStoreBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled

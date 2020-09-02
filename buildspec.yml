@@ -15,9 +15,8 @@ env:
 
 phases:
   install:
-    commands:
-      runtime-versions:
-        python: 3.x
+    runtime-versions:
+      python: 3.x
   pre-build:
     commands:
       - pip3 install boto3
