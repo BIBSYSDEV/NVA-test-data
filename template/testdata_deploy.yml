@@ -113,12 +113,6 @@ Resources:
                 Resource:
                   - !Sub arn:aws:s3:::${FrontendBucketName}/*
               - Action:
-                  - "lambda:InvokeFunction"
-                Effect: Allow
-                Resource:
-                  - !GetAtt InvalidateCloudfrontDistribution.Arn
-                  - !GetAtt CleanUpBucketBeforeDeploy.Arn
-              - Action:
                   - "codebuild:StartBuild"
                   - "codebuild:BatchGetBuilds"
                 Effect: Allow
@@ -173,4 +167,26 @@ Resources:
                 Action:
                   - "ssm:GetParameters"
                   - "secretsmanager:GetSecretValue"
+                Resource: "*"
+        - PolicyName: usersPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "cognito-idp:AdminSetPassword"
+                  - "cognito-idp:AdminInitiateAuth"
+                  - "cognito-idp:AdminCreateUser"
+                  - "cognito-idp:AdminDeleteUser"
+                  - "cognito-idp:ListUser"
+                Resource: "*"
+        - PolicyName: dynamoPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "dynamodb:scan"
+                  - "dynamodb:DeleteItem"
+                  - "dynamodb:PutItem"
                 Resource: "*"
