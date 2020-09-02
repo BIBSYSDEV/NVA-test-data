@@ -2,9 +2,6 @@ version: 0.2
 
 env:
   parameter-store:
-    AWS_COGNITO_IDENTITY_POOL_ID: REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID
-    AWS_USER_POOLS_ID: REACT_APP_AWS_USER_POOLS_ID
-    AWS_USER_POOLS_WEB_CLIENT_ID: REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
     REACT_APP_DOMAIN: REACT_APP_DOMAIN
     REACT_APP_API_URL: REACT_APP_API_URL
 
@@ -14,6 +11,7 @@ phases:
       python: 3.x
   pre_build:
     commands:
+      - pip3 install --upgrade pip3
       - pip3 install boto3
       - pip3 install requests
   build:

@@ -21,7 +21,7 @@ Parameters:
   GitHubBranch:
     Description: GitHub repo branch name. It defaults to master if not specified.
     Type: String
-    Default: NP-1406-create-build-for-testdata-creation-in-AWS
+    Default: master
 
 Resources:
   CodeBuildProject:
@@ -49,6 +49,10 @@ Resources:
         Location:
           Ref: ArtifactStoreBucket
       RoleArn: !GetAtt PipelineRole.Arn
+      Parameters:
+        CognitoIdentityPoolId: !ImportValue CognitoIdentityPoolId
+        UserPoolId: !ImportValue CognitoUserPoolId
+        UserPoolAppClientId: !ImportValue CognitoUserPoolAppClientId
       Stages:
         - Name: Source
           Actions:
@@ -77,6 +81,10 @@ Resources:
                 Version: "1"
               Configuration:
                 ProjectName: !GetAtt CodeBuildProject.Arn
+                EnvironmentVariables:
+                  - AWS_COGNITO_IDENTITY_POOL_ID: !Ref CognitoIdentityPoolId
+                  - AWS_USER_POOL_ID: !Ref UserPoolId
+                  - AWS_USER_POOL_WEB_CLIENT_ID: !Ref UserPoolAppClientId
               InputArtifacts:
                 - Name: SourceArtifact
               OutputArtifacts:
