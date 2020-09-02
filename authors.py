@@ -61,9 +61,9 @@ def connect_author_to_feide(connect_author, connect_scn, connect_payload, idToke
 
 USER_POOL_ID = os.environ['AWS_USER_POOLS_ID']
 if not USER_POOL_ID:
-    quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
+    quit('Set environment variable AWS_USER_POOLS_ID to correct User Pool Id')
 
-CLIENT_ID = os.environ['AWS_CLIENT_ID']
+CLIENT_ID = os.environ['AWS_USER_POOLS_WEB_CLIENT_ID']
 if not USER_POOL_ID:
     quit('Set environment variable AWS_CLIENT_ID to correct Client Id')
 
