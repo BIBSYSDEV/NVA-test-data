@@ -17,7 +17,7 @@ phases:
   install:
     runtime-versions:
       python: 3.x
-  pre-build:
+  pre_build:
     commands:
       - pip3 install boto3
       - pip3 install requests
