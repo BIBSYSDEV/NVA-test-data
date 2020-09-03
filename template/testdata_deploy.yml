@@ -163,6 +163,7 @@ Resources:
                   - "s3:GetObjectVersion"
                   - "s3:PutObject"
                   - "s3:ListBucket"
+                  - "s3:DeleteObjects"
                 Resource:
                   - !Sub "arn:aws:s3:::${ArtifactStoreBucket}/*"
         - PolicyName: secretsPolicy
