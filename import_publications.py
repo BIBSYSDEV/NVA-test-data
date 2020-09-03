@@ -79,9 +79,10 @@ def create_publications():
             result = put_item(new_publication)
 
 
+def run():
+    print('publications...')
+    delete_files_from_s3()
+    add_files_to_s3()
 
-delete_files_from_s3()
-add_files_to_s3()
-
-delete_publications()
-create_publications()
+    delete_publications()
+    create_publications()

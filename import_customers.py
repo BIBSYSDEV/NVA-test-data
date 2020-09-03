@@ -51,6 +51,7 @@ def put_item(new_customer):
     response = client.put_item(TableName=customer_tablename, Item=new_customer)
     return response
 
-
-delete_customers()
-create_customers()
+def run():
+    print('customers...')
+    delete_customers()
+    create_customers()

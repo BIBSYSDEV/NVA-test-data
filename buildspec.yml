@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.x
+  pre_build:
+    commands:
+      - pip3 install boto3
+      - pip3 install requests
+  build:
+    commands:
+      - python3 create_test_data.py
