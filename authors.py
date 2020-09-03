@@ -64,7 +64,7 @@ if not USER_POOL_ID:
     quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
 
 CLIENT_ID = os.environ['AWS_USER_POOL_WEB_CLIENT_ID']
-if not USER_POOL_ID:
+if not CLIENT_ID:
     quit('Set environment variable AWS_CLIENT_ID to correct Client Id')
 
 person_query = 'https://api.sandbox.nva.aws.unit.no/person/?name={}'
