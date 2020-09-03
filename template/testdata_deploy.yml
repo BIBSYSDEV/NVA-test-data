@@ -165,16 +165,13 @@ Resources:
                   - "s3:ListBucket"
                   - "s3:DeleteObjects"
                 Resource:
-                  - !Sub "arn:aws:s3:::${ArtifactStoreBucket}/*"
-        - PolicyName: secretsPolicy
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - "ssm:GetParameters"
-                  - "secretsmanager:GetSecretValue"
-                Resource: "*"
+                  - Fn::Sub:
+                      - arn:aws:s3:::${ResourceBucket}
+                      - ResourceBucket: !ImportValue NVAResourceStorageBucket
+                  - Fn::Sub:
+                      - arn:aws:s3:::${ResourceBucket}/*
+                      - ResourceBucket: !ImportValue NVAResourceStorageBucket
+                  - !Sub ${ArtifactStoreBucket.Arn}/*
         - PolicyName: usersPolicy
           PolicyDocument:
             Version: "2012-10-17"
