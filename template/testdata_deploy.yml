@@ -38,6 +38,15 @@ Resources:
           - Name: S3_BUCKET
             Type: PLAINTEXT
             Value: !Ref ArtifactStoreBucket
+          - Name: AWS_COGNITO_IDENTITY_POOL_ID
+            Type: PLAINTEXT
+            Value: !ImportValue CognitoIdentityPoolId
+          - Name: AWS_USER_POOL_ID
+            Type: PLAINTEXT
+            Value: !ImportValue CognitoUserPoolId
+          - Name: AWS_USER_POOL_WEB_CLIENT_ID
+            Type: PLAINTEXT
+            Value: !ImportValue CognitoUserPoolAppClientId
       Source:
         Type: CODEPIPELINE
 
@@ -77,10 +86,6 @@ Resources:
                 Version: "1"
               Configuration:
                 ProjectName: !GetAtt CodeBuildProject.Arn
-                EnvironmentVariables:
-                  - AWS_COGNITO_IDENTITY_POOL_ID: !ImportValue CognitoIdentityPoolId
-                  - AWS_USER_POOL_ID: !ImportValue CognitoUserPoolId
-                  - AWS_USER_POOL_WEB_CLIENT_ID: !ImportValue CognitoUserPoolAppClientId
               InputArtifacts:
                 - Name: SourceArtifact
               OutputArtifacts:
