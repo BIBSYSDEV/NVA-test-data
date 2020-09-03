@@ -179,7 +179,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - "cognito-idp:AdminSetPassword"
+                  - "cognito-idp:AdminSetUserPassword"
                   - "cognito-idp:AdminInitiateAuth"
                   - "cognito-idp:AdminCreateUser"
                   - "cognito-idp:AdminDeleteUser"
