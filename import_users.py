@@ -4,18 +4,82 @@ import os
 import copy
 import requests
 
-def setRole(username, orgNumber, role):
-    USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
+ROLE_TABLENAME = 'UsersAndRolesTable'
+CUSTOMER_TABLENAME = 'nva_customers'
+USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
+CLIENT_ID = os.environ['AWS_USER_POOL_WEB_CLIENT_ID']
+
+role_template_file_name = './users/role.json'
+db_client = boto3.client('dynamodb')
+
+def findCustomer(org_number):
+    try:
+        response = db_client.query(
+            ExpressionAttributeValues={
+                ':v1': {
+                    'S': org_number
+                }
+            }, 
+            KeyConditionExpression="feideOrganizationId = :v1", 
+            ProjectionExpression="identifier",
+            TableName=CUSTOMER_TABLENAME,
+            IndexName='byOrgNumber'
+            )
+        return response['Items'][0]['identifier']['S']
+    except:
+        print('Customer not found: {}'.format(org_number))
+        pass
+
+
+def createRole(test_user):
     if not USER_POOL_ID:
         quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
 
-    CLIENT_ID = os.environ['AWS_USER_POOL_WEB_CLIENT_ID']
     if not CLIENT_ID:
         quit('Set environment variable AWS_CLIENT_ID to correct Client Id')
 
+    with open(role_template_file_name) as role_template_file:
+        role_template = json.load(role_template_file)
+
+        given_name = test_user['givenName']
+        family_name = test_user['familyName']
+        username = test_user['username']
+        role = test_user['role']
+        org_number = test_user['orgNumber']
+        customer_iri = 'https://api.sandbox.nva.aws.unit.no/customer/{}'.format(findCustomer(org_number))
+
+        customer_identifier = findCustomer(test_user['orgNumber'])
+
+        new_role = copy.deepcopy(role_template)
+        new_role['familyName']['S'] = family_name
+        new_role['givenName']['S'] = given_name
+        new_role['institution']['S'] = customer_iri
+        new_role['PrimaryKeyHashKey']['S'] = 'USER#{}'.format(username)
+        new_role['PrimaryKeyRangeKey']['S'] = 'USER'
+        new_role['roles']['L'][0]['M']['name']['S'] = role
+        new_role['roles']['L'][0]['M']['PrimaryKeyHashKey']['S'] = 'ROLE#{}'.format(role)
+        new_role['username']['S'] = username
+
+        response = db_client.put_item(
+            TableName = ROLE_TABLENAME,
+            Item = new_role
+            )
+
+def deleteRole(username):
+    response = db_client.delete_item(
+        TableName = ROLE_TABLENAME,
+        Key = {
+            'PrimaryKeyHashKey': {
+                'S': 'USER#{}'.format(username)
+            },
+            'PrimaryKeyRangeKey': {
+                'S': 'USER'
+        }})
+    return
+
+
 def run():
     print('users...')
-    USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
     if not USER_POOL_ID:
         quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
 
@@ -45,9 +109,11 @@ def run():
 
             test_users = json.load(test_users_file)
             for test_user in test_users:
-                name = test_user['name']
+
+                family_name = test_user['familyName']
+                given_name = test_user['givenName']
                 username = test_user['username']
-                orgNumber = test_user['orgNumber']
+                org_number = test_user['orgNumber']
                 affiliation = test_user['affiliation']
                 user_attributes = copy.deepcopy(user)
 
@@ -59,9 +125,9 @@ def run():
                         attribute['Value'] = username
                     if attribute['Name'] == 'name' or attribute[
                             'Name'] == 'custom:commonName':
-                        attribute['Value'] = name
+                        attribute['Value'] = '{} {}'.format(given_name, family_name)
                     if attribute['Name'] == 'custom:orgNumber':
-                        attribute['Value'] = 'feide:{}'.format(orgNumber)
+                        attribute['Value'] = 'feide:{}'.format(org_number)
                     if attribute['Name'] == 'custom:affiliation':
                         attribute['Value'] = 'feide:{}'.format(affiliation)
 
@@ -76,6 +142,5 @@ def run():
                     pass
 
                 role = test_user['role']
-                requests.post(
-                    'https://api.sandbox.nva.aws.unit.no/person/{}/identifiers/feideid/add'.format(scn), 
-                    json=payload)
+                deleteRole(username)
+                createRole(test_user)

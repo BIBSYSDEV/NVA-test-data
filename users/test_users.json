@@ -1,34 +1,38 @@
 [
   {
-    "name": "End-to-end TestUser",
+    "familyName": "TestUser",
+    "givenName": "End-to-end",
     "username": "test-user-end-to-end@test.no",
     "role": "Registrator",
     "author": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "1234567890"
+    "orgNumber": "919477822"
   },
   {
-    "name": "Withauthor TestUser",
+    "familyName": "TestUser",
+    "givenName": "Withauthor",
     "username": "test-user-with-author@test.no",
     "role": "Registrator",
     "author": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "1234567890"
+    "orgNumber": "919477822"
   },
   {
-    "name": "Appadministrator TestUser",
+    "familyName": "TestUser",
+    "givenName": "Appadministrator",
     "username": "test-user-admin@test.no",
     "role": "Application Administrator",
     "author": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "1234567890"
+    "orgNumber": "919477822"
   },
   {
-    "name": "Curator TestUser",
+    "familyName": "TestUser",
+    "givenName": "Curator",
     "username": "test-user-curator@test.no",
     "role": "Curator",
     "author": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "1234567890"
+    "orgNumber": "919477822"
   }
 ]
