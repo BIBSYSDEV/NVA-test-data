@@ -1,0 +1,25 @@
+{
+  "familyName": "####################",
+  "givenName": "####################",
+  "institution": "####################",
+  "PrimaryKeyHashKey": "####################",
+  "PrimaryKeyRangeKey": "USER",
+  "roles": [
+    {
+      "name": "####################",
+      "PrimaryKeyHashKey": "ROLE#####################",
+      "PrimaryKeyRangeKey": "ROLE",
+      "type": "ROLE"
+    },
+    {
+      "name": "User",
+      "PrimaryKeyHashKey": "ROLE#User",
+      "PrimaryKeyRangeKey": "ROLE",
+      "type": "ROLE"
+    }
+  ],
+  "SecondaryIndex1HashKey": "####################",
+  "SecondaryIndex1RangeKey": "####################",
+  "type": "USER",
+  "username": "####################"
+}

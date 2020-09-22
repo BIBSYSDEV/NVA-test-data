@@ -1,27 +1,18 @@
 {
-  "administrationId": {
-    "S": "test-user-admin@test.no"
-  },
-  "archiveName": {
-    "S": "Test Archive"
-  },
-  "cname": {
-    "S": "test"
-  },
   "createdDate": {
     "S": "2020-01-01T00:00:00.000Z"
+  },
+  "cristinId": {
+    "S": "https://api.cristin.no/v2/institutions/20202"
   },
   "displayName": {
     "S": "Unit – Direktoratet for IKT og fellestjenester i høyere utdanning og forskning"
   },
   "feideOrganizationId": {
-    "S": "1234567890"
+    "S": "919477822"
   },
   "identifier": {
     "S": "######################"
-  },
-  "institutionDns": {
-    "S": "test.no"
   },
   "name": {
     "S": "Unit – Direktoratet for IKT og fellestjenester i høyere utdanning og forskning"

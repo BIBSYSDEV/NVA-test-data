@@ -40,7 +40,7 @@ def create_customers():
                     'administration_id']
                 new_customer['archiveName']['S'] = test_customer['archive_name']
                 new_customer['feideOrganizationId']['S'] = test_customer[
-                    'feide_orgnization_id']
+                    'feide_organization_id']
                 new_customer['identifier']['S'] = 'test_{}'.format(
                     str(uuid.uuid4()))
 

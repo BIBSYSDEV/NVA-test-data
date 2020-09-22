@@ -5,7 +5,7 @@
     "publication_instance_type": "JournalArticle",
     "file_identifier": "lorem_ipsum.txt",
     "file_name": "lorem_ipsum.txt",
-    "owner": "test@test.no",
+    "owner": "test-user-with-author@test.no",
     "status": "Draft"
   }
 ]

@@ -5,35 +5,19 @@ import os
 import uuid
 
 
-def create_user_map(client):
-    cognito_users = client.list_users(UserPoolId=USER_POOL_ID)
-    user_map = {}
-    for user in cognito_users['Users']:
-        cognito_username = user['Username']
-        user_email = ''
-        for attribute in user['Attributes']:
-            if attribute['Name'] == 'email':
-                user_email = attribute['Value']
-        for attribute in user['Attributes']:
-            if attribute['Name'] == 'custom:orgLegalName' and attribute[
-                    'Value'] == 'TestOrg':
-                user_map[user_email] = cognito_username
-    return user_map
-
-
 def get_id_token(username, client):
     password = 'P%-' + str(uuid.uuid4())
     response = client.admin_set_user_password(
         Password=password,
         UserPoolId=USER_POOL_ID,
-        Username=user_map[username],
+        Username=username,
         Permanent=True,
     )
     response = client.admin_initiate_auth(UserPoolId=USER_POOL_ID,
                                           ClientId=CLIENT_ID,
                                           AuthFlow='ADMIN_USER_PASSWORD_AUTH',
                                           AuthParameters={
-                                              'USERNAME': user_map[username],
+                                              'USERNAME': username,
                                               'PASSWORD': password,
                                           })
     return response['AuthenticationResult']['IdToken']
@@ -72,8 +56,6 @@ person_query = 'https://api.sandbox.nva.aws.unit.no/person/?name={}'
 test_users_file_name = './users/test_users.json'
 
 client = boto3.client('cognito-idp')
-
-user_map = create_user_map(client)
 
 def run():
     print('authors...')

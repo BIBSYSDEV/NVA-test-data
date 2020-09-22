@@ -2,6 +2,16 @@ import boto3
 import json
 import os
 import copy
+import requests
+
+def setRole(username, orgNumber, role):
+    USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
+    if not USER_POOL_ID:
+        quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
+
+    CLIENT_ID = os.environ['AWS_USER_POOL_WEB_CLIENT_ID']
+    if not CLIENT_ID:
+        quit('Set environment variable AWS_CLIENT_ID to correct Client Id')
 
 def run():
     print('users...')
@@ -37,6 +47,8 @@ def run():
             for test_user in test_users:
                 name = test_user['name']
                 username = test_user['username']
+                orgNumber = test_user['orgNumber']
+                affiliation = test_user['affiliation']
                 user_attributes = copy.deepcopy(user)
 
                 for attribute in user_attributes:
@@ -48,6 +60,10 @@ def run():
                     if attribute['Name'] == 'name' or attribute[
                             'Name'] == 'custom:commonName':
                         attribute['Value'] = name
+                    if attribute['Name'] == 'custom:orgNumber':
+                        attribute['Value'] = 'feide:{}'.format(orgNumber)
+                    if attribute['Name'] == 'custom:affiliation':
+                        attribute['Value'] = 'feide:{}'.format(affiliation)
 
                 try:
                     response = client.admin_create_user(
@@ -58,3 +74,8 @@ def run():
                 except:
                     print('Error creating users')
                     pass
+
+                role = test_user['role']
+                requests.post(
+                    'https://api.sandbox.nva.aws.unit.no/person/{}/identifiers/feideid/add'.format(scn), 
+                    json=payload)
