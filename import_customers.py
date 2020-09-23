@@ -36,11 +36,8 @@ def create_customers():
             test_customers = json.load(test_customers_file)
             for test_customer in test_customers:
                 new_customer = copy.deepcopy(customer_template)
-                new_customer['administrationId']['S'] = test_customer[
-                    'administration_id']
-                new_customer['archiveName']['S'] = test_customer['archive_name']
                 new_customer['feideOrganizationId']['S'] = test_customer[
-                    'feide_orgnization_id']
+                    'feide_organization_id']
                 new_customer['identifier']['S'] = 'test_{}'.format(
                     str(uuid.uuid4()))
 
@@ -48,7 +45,9 @@ def create_customers():
 
 def put_item(new_customer):
 
-    response = client.put_item(TableName=customer_tablename, Item=new_customer)
+    response = client.put_item(
+        TableName=customer_tablename, 
+        Item=new_customer)
     return response
 
 def run():

@@ -1,0 +1,59 @@
+{
+  "familyName": {
+    "S": "####################"
+  },
+  "givenName": {
+    "S": "####################"
+  },
+  "institution": {
+    "S": "####################"
+  },
+  "PrimaryKeyHashKey": {
+    "S": "USER#jb@unit.no"
+  },
+  "PrimaryKeyRangeKey": {
+    "S": "USER"
+  },
+  "roles": {
+    "L": [
+      {
+        "M": {
+          "name": {
+            "S": "####################"
+          },
+          "PrimaryKeyHashKey": {
+            "S": "####################"
+          },
+          "PrimaryKeyRangeKey": {
+            "S": "ROLE"
+          },
+          "type": {
+            "S": "ROLE"
+          }
+        }
+      },
+      {
+        "M": {
+          "name": {
+            "S": "User"
+          },
+          "PrimaryKeyHashKey": {
+            "S": "ROLE#User"
+          },
+          "PrimaryKeyRangeKey": {
+            "S": "ROLE"
+          },
+          "type": {
+            "S": "ROLE"
+          }
+        }
+      }
+    ]
+  },
+  "type": {
+    "S": "USER"
+  },
+  "username": {
+    "S": "####################"
+  }
+}
