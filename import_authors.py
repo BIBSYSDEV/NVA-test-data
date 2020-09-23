@@ -4,7 +4,7 @@ import boto3
 import os
 import uuid
 
-stage = 'sandbox'
+STAGE = 'sandbox'
 
 def get_id_token(username, client):
     password = 'P%-' + str(uuid.uuid4())
@@ -28,7 +28,7 @@ def connect_author_to_feide(connect_author, connect_scn, connect_payload, idToke
     if connect_author:
         connect_response = requests.post(
             'https://api.{}.nva.aws.unit.no/person/{}/identifiers/feideid/add'
-            .format(stage, scn),
+            .format(STAGE, scn),
             json=payload)
         if not connect_response:
             print('POST /person/ {}'.format(connect_response.status_code))
@@ -36,7 +36,7 @@ def connect_author_to_feide(connect_author, connect_scn, connect_payload, idToke
         token = 'Bearer ' + idToken
         delete_response = requests.delete(
             'https://api.{}.nva.aws.unit.no/person/{}/identifiers/feideid/delete'
-            .format(stage, scn),
+            .format(STAGE, scn),
             json=payload,
             headers={'Authorization': token})
         if not delete_response:
@@ -72,7 +72,7 @@ def run():
 
             idToken = get_id_token(username, client)
 
-            query_response = requests.get(person_query.format(stage, givenName, familyName))
+            query_response = requests.get(person_query.format(STAGE, givenName, familyName))
             if query_response.status_code != 200:
                 print('GET /person/ {}'.format(resp.status_code))
             if query_response.json() == []:
@@ -81,7 +81,7 @@ def run():
                 token = 'Bearer ' + idToken
                 create_response = requests.post(
                     'https://api.{}.nva.aws.unit.no/person/'
-                    .format(stage),
+                    .format(STAGE),
                     json=new_author,
                     headers={'Authorization': token})
                 if not create_response:

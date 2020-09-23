@@ -8,13 +8,14 @@ ROLE_TABLENAME = 'UsersAndRolesTable'
 CUSTOMER_TABLENAME = 'nva_customers'
 USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
 CLIENT_ID = os.environ['AWS_USER_POOL_WEB_CLIENT_ID']
+STAGE = 'sandbox'
 
-role_template_file_name = './users/role.json'
-db_client = boto3.client('dynamodb')
+ROLE_TEMPLATE_FILE_NAME = './users/role.json'
+DB_CLIENT = boto3.client('dynamodb')
 
 def findCustomer(org_number):
     try:
-        response = db_client.query(
+        response = DB_CLIENT.query(
             ExpressionAttributeValues={
                 ':v1': {
                     'S': org_number
@@ -36,9 +37,9 @@ def createRole(test_user):
         quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
 
     if not CLIENT_ID:
-        quit('Set environment variable AWS_CLIENT_ID to correct Client Id')
+        quit('Set environment variable AWS_CLIENT_ID to correct COGNITO_CLIENT Id')
 
-    with open(role_template_file_name) as role_template_file:
+    with open(ROLE_TEMPLATE_FILE_NAME) as role_template_file:
         role_template = json.load(role_template_file)
 
         given_name = test_user['givenName']
@@ -46,7 +47,7 @@ def createRole(test_user):
         username = test_user['username']
         role = test_user['role']
         org_number = test_user['orgNumber']
-        customer_iri = 'https://api.sandbox.nva.aws.unit.no/customer/{}'.format(findCustomer(org_number))
+        customer_iri = 'https://api.{}.nva.aws.unit.no/customer/{}'.format(STAGE, findCustomer(org_number))
 
         customer_identifier = findCustomer(test_user['orgNumber'])
 
@@ -60,13 +61,13 @@ def createRole(test_user):
         new_role['roles']['L'][0]['M']['PrimaryKeyHashKey']['S'] = 'ROLE#{}'.format(role)
         new_role['username']['S'] = username
 
-        response = db_client.put_item(
+        response = DB_CLIENT.put_item(
             TableName = ROLE_TABLENAME,
             Item = new_role
             )
 
 def deleteRole(username):
-    response = db_client.delete_item(
+    response = DB_CLIENT.delete_item(
         TableName = ROLE_TABLENAME,
         Key = {
             'PrimaryKeyHashKey': {
@@ -89,9 +90,9 @@ def run():
     with open(user_attribute_file_name) as json_file:
         user = json.load(json_file)
 
-        client = boto3.client('cognito-idp')
+        COGNITO_CLIENT = boto3.client('cognito-idp')
         cognito_test_users = []
-        response = client.list_users(UserPoolId=USER_POOL_ID)
+        response = COGNITO_CLIENT.list_users(UserPoolId=USER_POOL_ID)
         for cognito_user in response['Users']:
             for attribute in cognito_user['Attributes']:
                 if attribute['Name'] == 'custom:orgLegalName' and attribute[
@@ -99,7 +100,7 @@ def run():
                     cognito_test_users.append(cognito_user['Username'])
         for cognito_test_username in cognito_test_users:
             try:
-                response = client.admin_delete_user(UserPoolId=USER_POOL_ID,
+                response = COGNITO_CLIENT.admin_delete_user(UserPoolId=USER_POOL_ID,
                                                     Username=cognito_test_username)
             except:
                 print('Error deleting users')
@@ -132,7 +133,7 @@ def run():
                         attribute['Value'] = 'feide:{}'.format(affiliation)
 
                 try:
-                    response = client.admin_create_user(
+                    response = COGNITO_CLIENT.admin_create_user(
                         UserPoolId=USER_POOL_ID,
                         Username=username,
                         UserAttributes=user_attributes,
