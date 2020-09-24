@@ -2,6 +2,7 @@ import boto3
 import json
 import copy
 import uuid
+import requests
 from os import listdir
 
 dynamodb_client = boto3.client('dynamodb')
@@ -10,6 +11,27 @@ publication_template_file_name = './publications/publication.json'
 test_publications_file_name = './publications/test_publications.json'
 publications_tablename = 'nva_resources'
 s3_bucket_name = 'nva-s3-storage-bucket-nvastoragebucket-1vc7h4ulsm9bj'
+person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
+
+STAGE = 'sandbox'
+
+arp_dict = {}
+
+def map_user_to_arp():
+    with open('./users/test_users.json') as user_file:
+        users = json.load(user_file)
+        for user in users:
+            arp_dict[user['username']] = {
+                'familyName': user['familyName'],
+                'givenName': user['givenName']
+            }
+            if(user['author']):
+                query_response = requests.get(person_query.format(STAGE, user['givenName'], user['familyName']))
+                if query_response.status_code != 200:
+                    print('GET /person/ {}'.format(resp.status_code))
+                if query_response.json() != []:
+                    arp_dict[user['username']]['scn'] = query_response.json()[0]['systemControlNumber']
+
 
 def delete_files_from_s3():
     s3_objects = s3_client.list_objects_v2(Bucket=s3_bucket_name)
@@ -76,11 +98,24 @@ def create_publications():
             new_publication['owner']['S'] = test_publication['owner']
             new_publication['status']['S']= test_publication['status']
 
+            if test_publication['contributor'] != '':
+                contributor = test_publication['contributor']
+                with open('./publications/contributors.json') as contributor_template_file:
+                    contributor_template = json.load(contributor_template_file)
+
+                    new_contributor = copy.deepcopy(contributor_template)
+                    new_contributor['M']['email']['S'] = contributor
+                    new_contributor['M']['identity']['M']['arpId']['S'] = arp_dict[contributor]['scn']
+                    new_contributor['M']['identity']['M']['name']['S'] = '{}, {}'.format(arp_dict[contributor]['familyName'], arp_dict[contributor]['givenName'])
+                    
+                    new_publication['entityDescription']['M']['contributors']['L'].append(new_contributor)
+
             result = put_item(new_publication)
 
 
 def run():
     print('publications...')
+    map_user_to_arp()
     delete_files_from_s3()
     add_files_to_s3()
 

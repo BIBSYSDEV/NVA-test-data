@@ -1,0 +1,53 @@
+{
+  "M": {
+    "affiliations": {
+      "L": [
+        {
+          "M": {
+            "id": {
+              "S": "https://api.cristin.no/v2/institutions/20202"
+            },
+            "type": {
+              "S": "Organization"
+            }
+          }
+        },
+        {
+          "M": {
+            "id": {
+              "S": "20202.0.0.0"
+            },
+            "type": {
+              "S": "Organization"
+            }
+          }
+        }
+      ]
+    },
+    "correspondingAuthor": {
+      "BOOL": true
+    },
+    "email": {
+      "S": "####################"
+    },
+    "identity": {
+      "M": {
+        "arpId": {
+          "S": "#####################"
+        },
+        "name": {
+          "S": "#####################"
+        },
+        "type": {
+          "S": "Identity"
+        }
+      }
+    },
+    "sequence": {
+      "N": "1"
+    },
+    "type": {
+      "S": "Contributor"
+    }
+  }
+}

@@ -6,6 +6,7 @@
     "file_identifier": "lorem_ipsum.txt",
     "file_name": "lorem_ipsum.txt",
     "owner": "test-user-with-author@test.no",
-    "status": "Draft"
+    "status": "Draft",
+    "contributor": "test-user-with-author@test.no"
   }
 ]

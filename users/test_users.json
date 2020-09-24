@@ -3,7 +3,7 @@
     "familyName": "TestUser",
     "givenName": "End-to-end",
     "username": "test-user-end-to-end@test.no",
-    "role": "Registrator",
+    "role": "Creator",
     "author": false,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822"
@@ -12,7 +12,7 @@
     "familyName": "TestUser",
     "givenName": "Withauthor",
     "username": "test-user-with-author@test.no",
-    "role": "Registrator",
+    "role": "Creator",
     "author": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822"
@@ -21,7 +21,7 @@
     "familyName": "TestUser",
     "givenName": "Appadministrator",
     "username": "test-user-admin@test.no",
-    "role": "Application Administrator",
+    "role": "App-admin",
     "author": false,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822"
