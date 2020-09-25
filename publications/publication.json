@@ -5,7 +5,48 @@
   "entityDescription": {
     "M": {
       "contributors": {
-        "L": []
+        "L": [
+          {
+            "M": {
+              "affiliations": {
+                "L": [
+                  {
+                    "M": {
+                      "id": {
+                        "S": "https://api.cristin.no/v2/institutions/20202"
+                      },
+                      "type": {
+                        "S": "Organization"
+                      }
+                    }
+                  }
+                ]
+              },
+              "correspondingAuthor": {
+                "BOOL": false
+              },
+              "identity": {
+                "M": {
+                  "arpId": {
+                    "S": "1592998838101"
+                  },
+                  "name": {
+                    "S": "TestUser, Withauthor"
+                  },
+                  "type": {
+                    "S": "Identity"
+                  }
+                }
+              },
+              "sequence": {
+                "N": "1"
+              },
+              "type": {
+                "S": "Contributor"
+              }
+            }
+          }
+        ]
       },
       "date": {
         "M": {
@@ -17,6 +58,9 @@
       "language": {
         "S": ""
       },
+      "mainTitle": {
+        "S": "Published publication"
+      },
       "reference": {
         "M": {
           "doi": {
@@ -24,14 +68,20 @@
           },
           "publicationContext": {
             "M": {
+              "level": {
+                "S": "LEVEL_1"
+              },
               "openAccess": {
                 "BOOL": false
               },
               "peerReviewed": {
                 "BOOL": false
               },
+              "title": {
+                "S": "British Journal of Neurosurgery"
+              },
               "type": {
-                "S": "####################"
+                "S": "######################"
               }
             }
           },
@@ -65,7 +115,13 @@
       }
     }
   },
-  "publicationType": {
+  "identifier": {
+    "S": "07d648a6-bdf6-4359-8ac0-b59858ebca0f"
+  },
+  "modifiedDate": {
+    "S": "2020-01-01T00:00:00.000000Z"
+  },
+  "owner": {
     "S": "####################"
   },
   "fileSet": {
@@ -78,19 +134,36 @@
                 "BOOL": false
               },
               "identifier": {
-                "S": "####################"
+                "S": "#####################"
+              },
+              "license": {
+                "M": {
+                  "identifier": {
+                    "S": "CC BY"
+                  },
+                  "labels": {
+                    "M": {
+                      "nb": {
+                        "S": "CC BY"
+                      }
+                    }
+                  },
+                  "type": {
+                    "S": "License"
+                  }
+                }
               },
               "mimeType": {
                 "S": "text/plain"
               },
               "name": {
-                "S": "####################"
+                "S": "#####################"
               },
               "publisherAuthority": {
                 "BOOL": false
               },
               "size": {
-                "N": "1682"
+                "N": "453"
               },
               "type": {
                 "S": "File"
@@ -104,19 +177,10 @@
       }
     }
   },
-  "identifier": {
-    "S": "07d648a6-bdf6-4359-8ac0-b59858ebca0f"
-  },
-  "modifiedDate": {
-    "S": "2020-01-01T00:00:00.000000Z"
-  },
-  "owner": {
-    "S": "####################"
-  },
   "publisher": {
     "M": {
       "id": {
-        "S": "https://api.cristin.no/v2/institutions/20202"
+        "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"
       },
       "type": {
         "S": "Organization"
@@ -124,10 +188,10 @@
     }
   },
   "publisherId": {
-    "S": "https://api.cristin.no/v2/institutions/20202"
+    "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"
   },
   "publisherOwnerDate": {
-    "S": "https://api.cristin.no/v2/institutions/20202#test@test.no#2020-01-01T00:00:00.000000Z"
+    "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934#test@test.no#2020-01-01T00:00:00.000000Z"
   },
   "status": {
     "S": "Draft"

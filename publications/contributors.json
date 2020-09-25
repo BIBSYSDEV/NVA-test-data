@@ -5,7 +5,7 @@
         {
           "M": {
             "id": {
-              "S": "https://api.cristin.no/v2/institutions/20202"
+              "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"
             },
             "type": {
               "S": "Organization"
