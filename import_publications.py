@@ -16,6 +16,7 @@ person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
 STAGE = 'sandbox'
 
 arp_dict = {}
+file_dict = {}
 
 def map_user_to_arp():
     with open('./users/test_users.json') as user_file:
@@ -38,10 +39,19 @@ def delete_files_from_s3():
 
     if s3_objects['KeyCount'] > 0:
         object_keys = []
+        files = listdir('./publications/files')
         for s3_object in s3_objects['Contents']:
-            object_keys.append({
-                'Key': s3_object['Key']
-            })
+            head = s3_client.head_object(
+                Bucket=s3_bucket_name,
+                Key=s3_object['Key']
+            )
+
+            filename = head['ContentDisposition'].replace('filename=', '').replace('"', '')
+
+            if filename in files:
+                object_keys.append({
+                    'Key': s3_object['Key']
+                })
 
         s3_client.delete_objects(Bucket=s3_bucket_name, Delete = {
             'Objects': object_keys
@@ -51,7 +61,8 @@ def delete_files_from_s3():
 def add_files_to_s3():
     files = listdir('./publications/files')
     for import_file in files:
-        key = import_file.split('.')[0]
+        key = str(uuid.uuid4())
+        file_dict[import_file] = key
         with open('./publications/files/{}'.format(import_file),'rb') as import_file_body:
             s3_client.put_object(Bucket=s3_bucket_name, Key=key, Body=import_file_body, 
                 ContentDisposition='filename="{}"'.format(import_file), ContentType='text/plain')
@@ -90,12 +101,12 @@ def create_publications():
         test_publications = json.load(test_publications_file)
         for test_publication in test_publications:
             new_publication = copy.deepcopy(publication_template)
-            new_publication['publicationType']['S'] = test_publication['publication_type']
             new_publication['entityDescription']['M']['reference']['M']['publicationContext']['M']['type']['S'] = test_publication['publication_context_type']
             new_publication['entityDescription']['M']['reference']['M']['publicationInstance']['M']['type']['S'] = test_publication['publication_instance_type']
-            new_publication['fileSet']['M']['files']['L'][0]['M']['identifier']['S'] = test_publication['file_identifier']
+            new_publication['fileSet']['M']['files']['L'][0]['M']['identifier']['S'] = file_dict[test_publication['file_name']]
             new_publication['fileSet']['M']['files']['L'][0]['M']['name']['S'] = test_publication['file_name']
             new_publication['owner']['S'] = test_publication['owner']
+            new_publication['publisherOwnerDate']['S'] = 'https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934#{}#2020-01-01T00:00:00.000000Z'.format(test_publication['owner'])
             new_publication['status']['S']= test_publication['status']
 
             if test_publication['contributor'] != '':
@@ -106,7 +117,7 @@ def create_publications():
                     new_contributor = copy.deepcopy(contributor_template)
                     new_contributor['M']['email']['S'] = contributor
                     new_contributor['M']['identity']['M']['arpId']['S'] = arp_dict[contributor]['scn']
-                    new_contributor['M']['identity']['M']['name']['S'] = '{}, {}'.format(arp_dict[contributor]['familyName'], arp_dict[contributor]['givenName'])
+                    new_contributor['M']['identity']['M']['name']['S'] = '{},{}'.format(arp_dict[contributor]['familyName'], arp_dict[contributor]['givenName'])
                     
                     new_publication['entityDescription']['M']['contributors']['L'].append(new_contributor)
 
