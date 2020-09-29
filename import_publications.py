@@ -77,14 +77,15 @@ def scan_publications():
 def delete_publications():
     publications = scan_publications()
     for publication in publications:
+        modifiedDate = publication['modifiedDate']['S']
         identifier = publication['identifier']['S']
-        if identifier.startswith('test_'):
-            print(identifier)
+        if modifiedDate == '2020-01-01T00:00:00.000000Z':
             response = dynamodb_client.delete_item(
                 TableName=publications_tablename,
-                Key={'identifier': {
-                    'S': identifier
-                }})
+                Key={
+                    'identifier': { 'S': identifier},
+                    'modifiedDate': { 'S': modifiedDate}
+                })
     return
 
 
@@ -104,6 +105,7 @@ def create_publications():
         for test_publication in test_publications:
             new_publication = copy.deepcopy(publication_template)
             new_publication['identifier']['S'] = str(uuid.uuid4())
+            new_publication['entityDescription']['M']['mainTitle']['S'] = test_publication['title']
             new_publication['entityDescription']['M']['reference']['M']['publicationContext']['M']['type']['S'] = test_publication['publication_context_type']
             new_publication['entityDescription']['M']['reference']['M']['publicationInstance']['M']['type']['S'] = test_publication['publication_instance_type']
             new_publication['fileSet']['M']['files']['L'][0]['M']['identifier']['S'] = file_dict[test_publication['file_name']]
