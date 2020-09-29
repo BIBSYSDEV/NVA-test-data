@@ -3,6 +3,7 @@ import json
 import copy
 import uuid
 import requests
+import uuid
 from os import listdir
 
 dynamodb_client = boto3.client('dynamodb')
@@ -78,8 +79,9 @@ def delete_publications():
     for publication in publications:
         identifier = publication['identifier']['S']
         if identifier.startswith('test_'):
-            response = client.delete_item(
-                TableName=publication_tablename,
+            print(identifier)
+            response = dynamodb_client.delete_item(
+                TableName=publications_tablename,
                 Key={'identifier': {
                     'S': identifier
                 }})
@@ -101,6 +103,7 @@ def create_publications():
         test_publications = json.load(test_publications_file)
         for test_publication in test_publications:
             new_publication = copy.deepcopy(publication_template)
+            new_publication['identifier']['S'] = str(uuid.uuid4())
             new_publication['entityDescription']['M']['reference']['M']['publicationContext']['M']['type']['S'] = test_publication['publication_context_type']
             new_publication['entityDescription']['M']['reference']['M']['publicationInstance']['M']['type']['S'] = test_publication['publication_instance_type']
             new_publication['fileSet']['M']['files']['L'][0]['M']['identifier']['S'] = file_dict[test_publication['file_name']]
