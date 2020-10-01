@@ -57,6 +57,8 @@ def createRole(test_user):
         new_role['institution']['S'] = customer_iri
         new_role['PrimaryKeyHashKey']['S'] = 'USER#{}'.format(username)
         new_role['PrimaryKeyRangeKey']['S'] = 'USER'
+        new_role['SecondaryIndex1HashKey']['S'] = customer_iri
+        new_role['SecondaryIndex1RangeKey']['S'] = username
         new_role['roles']['L'][0]['M']['name']['S'] = role
         new_role['roles']['L'][0]['M']['PrimaryKeyHashKey']['S'] = 'ROLE#{}'.format(role)
         new_role['username']['S'] = username

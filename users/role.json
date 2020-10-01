@@ -9,10 +9,16 @@
     "S": "####################"
   },
   "PrimaryKeyHashKey": {
-    "S": "USER#jb@unit.no"
+    "S": "####################"
   },
   "PrimaryKeyRangeKey": {
     "S": "USER"
+  },
+  "SecondaryIndex1HashKey": {
+    "S": "####################"
+  },
+  "SecondaryIndex1RangeKey": {
+    "S": "####################"
   },
   "roles": {
     "L": [

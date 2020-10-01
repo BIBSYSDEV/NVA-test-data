@@ -11,6 +11,7 @@ s3_client = boto3.client('s3')
 publication_template_file_name = './publications/publication.json'
 test_publications_file_name = './publications/test_publications.json'
 publications_tablename = 'nva_resources'
+user_tablename = 'UsersAndRolesTable'
 s3_bucket_name = 'nva-s3-storage-bucket-nvastoragebucket-1vc7h4ulsm9bj'
 person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
 
@@ -95,6 +96,13 @@ def put_item(new_publication):
                                Item=new_publication)
     return response
 
+def get_customer(username):
+    response = dynamodb_client.get_item(TableName=user_tablename, Key={
+        'PrimaryKeyHashKey': {'S': 'USER#{}'.format(username)},
+        'PrimaryKeyRangeKey': {'S': 'USER'},
+    })
+    return response['Item']['institution']['S']
+
 def create_publications():
     with open(publication_template_file_name) as publication_template_file:
         publication_template = json.load(publication_template_file)
@@ -103,6 +111,9 @@ def create_publications():
 
         test_publications = json.load(test_publications_file)
         for test_publication in test_publications:
+
+            customer = get_customer(test_publication['owner'])
+
             new_publication = copy.deepcopy(publication_template)
             new_publication['identifier']['S'] = str(uuid.uuid4())
             new_publication['entityDescription']['M']['mainTitle']['S'] = test_publication['title']
@@ -111,7 +122,9 @@ def create_publications():
             new_publication['fileSet']['M']['files']['L'][0]['M']['identifier']['S'] = file_dict[test_publication['file_name']]
             new_publication['fileSet']['M']['files']['L'][0]['M']['name']['S'] = test_publication['file_name']
             new_publication['owner']['S'] = test_publication['owner']
-            new_publication['publisherOwnerDate']['S'] = 'https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934#{}#2020-01-01T00:00:00.000000Z'.format(test_publication['owner'])
+            new_publication['publisher']['M']['id']['S'] = customer
+            new_publication['publisherId']['S'] = customer
+            new_publication['publisherOwnerDate']['S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(customer, test_publication['owner'])
             new_publication['status']['S']= test_publication['status']
 
             if test_publication['contributor'] != '':

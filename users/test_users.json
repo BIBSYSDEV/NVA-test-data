@@ -22,7 +22,7 @@
     "givenName": "Appadministrator",
     "username": "test-user-admin@test.no",
     "role": "App-admin",
-    "author": false,
+    "author": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822"
   },
@@ -31,6 +31,15 @@
     "givenName": "Curator",
     "username": "test-user-curator@test.no",
     "role": "Curator",
+    "author": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Institution-admin",
+    "username": "test-user-inst-admin@test.no",
+    "role": "Institution-admin",
     "author": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822"
