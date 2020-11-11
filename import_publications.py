@@ -80,7 +80,8 @@ def delete_publications():
     for publication in publications:
         modifiedDate = publication['modifiedDate']['S']
         identifier = publication['identifier']['S']
-        if modifiedDate == '2020-01-01T00:00:00.000000Z':
+        owner = publication['owner']['S']
+        if owner.endswith('test.no'):
             response = dynamodb_client.delete_item(
                 TableName=publications_tablename,
                 Key={
@@ -150,3 +151,5 @@ def run():
 
     delete_publications()
     create_publications()
+
+run()
