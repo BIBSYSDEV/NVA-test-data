@@ -147,3 +147,5 @@ def run():
                 role = test_user['role']
                 deleteRole(username)
                 createRole(test_user)
+
+run()

@@ -54,3 +54,5 @@ def run():
     print('customers...')
     delete_customers()
     create_customers()
+
+run()

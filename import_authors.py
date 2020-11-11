@@ -57,7 +57,7 @@ def run():
 
             query_response = requests.get(person_query.format(STAGE, givenName, familyName))
             if query_response.status_code != 200:
-                print('GET /person/ {}'.format(resp.status_code))
+                print('GET /person/ {}'.format(query_response.status_code))
             if query_response.json() == []:
                 inverted_name = '{}, {}'.format(familyName,givenName)
                 new_author = {'invertedname': inverted_name}
@@ -86,3 +86,5 @@ def run():
                                             idToken=idToken,
                                             scn=scn,
                                             payload=payload)
+
+run()
