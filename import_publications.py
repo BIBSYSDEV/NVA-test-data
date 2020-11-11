@@ -31,7 +31,7 @@ def map_user_to_arp():
             if(user['author']):
                 query_response = requests.get(person_query.format(STAGE, user['givenName'], user['familyName']))
                 if query_response.status_code != 200:
-                    print('GET /person/ {}'.format(resp.status_code))
+                    print('GET /person/ {}'.format(query_response.status_code))
                 if query_response.json() != []:
                     arp_dict[user['username']]['scn'] = query_response.json()[0]['systemControlNumber']
 
@@ -82,7 +82,7 @@ def delete_publications():
         identifier = publication['identifier']['S']
         owner = publication['owner']['S']
         if owner.endswith('test.no'):
-            response = dynamodb_client.delete_item(
+            dynamodb_client.delete_item(
                 TableName=publications_tablename,
                 Key={
                     'identifier': { 'S': identifier},
@@ -140,7 +140,7 @@ def create_publications():
                     
                     new_publication['entityDescription']['M']['contributors']['L'].append(new_contributor)
 
-            result = put_item(new_publication)
+            put_item(new_publication)
 
 
 def run():
