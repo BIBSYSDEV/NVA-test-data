@@ -6,7 +6,8 @@
     "role": "Creator",
     "author": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822"
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
   },
   {
     "familyName": "TestUser",
@@ -15,16 +16,18 @@
     "role": "Creator",
     "author": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822"
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
   },
   {
     "familyName": "TestUser",
-    "givenName": "Appadministrator",
-    "username": "test-user-admin@test.no",
+    "givenName": "App-admin",
+    "username": "test-user-app-admin@test.no",
     "role": "App-admin",
     "author": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822"
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
   },
   {
     "familyName": "TestUser",
@@ -33,7 +36,18 @@
     "role": "Curator",
     "author": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822"
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Editor",
+    "username": "test-user-editor@test.no",
+    "role": "Editor",
+    "author": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
   },
   {
     "familyName": "TestUser",
@@ -42,6 +56,27 @@
     "role": "Institution-admin",
     "author": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822"
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Add institution",
+    "username": "test-user-add-institution@test.no",
+    "role": "Creator",
+    "author": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Remove institution",
+    "username": "test-user-with-institution-remove-institution@test.no",
+    "role": "Creator",
+    "author": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
   }
 ]

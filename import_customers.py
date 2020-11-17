@@ -27,6 +27,7 @@ def delete_customers():
                 }})
     return
 
+
 def create_customers():
     with open(customer_template_file_name) as customer_template_file:
         customer_template = json.load(customer_template_file)
@@ -43,14 +44,18 @@ def create_customers():
 
                 result = put_item(new_customer)
 
+
 def put_item(new_customer):
 
-    response = client.put_item(
-        TableName=customer_tablename, 
-        Item=new_customer)
+    response = client.put_item(TableName=customer_tablename, Item=new_customer)
     return response
+
 
 def run():
     print('customers...')
     delete_customers()
     create_customers()
+
+
+if __name__ == '__main__':
+    run()

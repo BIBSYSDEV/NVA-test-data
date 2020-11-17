@@ -1,0 +1,20 @@
+{"publisherId": 
+    {
+        "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"}, 
+        "createdDate": 
+        {
+            "S": "2020-11-10T08:34:28.270405Z"
+        }, 
+            "publisher": 
+            {
+                "M": {
+                    "type": {
+                        "S": "Organization"}, 
+                    "id": {"S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"
+                        }
+                        }
+                    }, 
+                    "identifier": {"S": "c1c475ae-dd5c-478b-84ff-ee3dde230432"}, 
+                    "status": {"S": "Draft"}, "owner": {"S": "test-user-with-author@test.no"}, 
+                    "modifiedDate": {"S": "2020-11-10T08:34:28.270405Z"}, 
+                    "publisherOwnerDate": {"S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934#test-user-with-author@test.no#2020-11-10T08:34:28.270405Z"}, "type": {"S": "Publication"}, "fileSet": {"M": {"type": {"S": "FileSet"}, "files": {"L": [{"M": {"identifier": {"S": "0c033bf1-b04f-4023-87f7-1d9071a88a3f"}, "size": {"N": "1334"}, "publisherAuthority": {"BOOL": "False"}, "name": {"S": "example.txt"}, "administrativeAgreement": {"BOOL": "False"}, "mimeType": {"S": "text/plain"}, "type": {"S": "File"}}}]}}}}

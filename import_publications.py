@@ -12,13 +12,17 @@ publication_template_file_name = './publications/publication.json'
 test_publications_file_name = './publications/test_publications.json'
 publications_tablename = 'nva_resources'
 user_tablename = 'UsersAndRolesTable'
-s3_bucket_name = 'nva-s3-storage-bucket-nvastoragebucket-1vc7h4ulsm9bj'
 person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
 
-STAGE = 'sandbox'
+ssm = boto3.client('ssm')
+s3_bucket_name = ssm.get_parameter(Name='/test/RESOURCE_S3_BUCKET',
+                                   WithDecryption=False)['Parameter']['Value']
+STAGE = ssm.get_parameter(Name='/test/STAGE',
+                          WithDecryption=False)['Parameter']['Value']
 
 arp_dict = {}
 file_dict = {}
+
 
 def map_user_to_arp():
     with open('./users/test_users.json') as user_file:
@@ -28,12 +32,15 @@ def map_user_to_arp():
                 'familyName': user['familyName'],
                 'givenName': user['givenName']
             }
-            if(user['author']):
-                query_response = requests.get(person_query.format(STAGE, user['givenName'], user['familyName']))
+            if (user['author']):
+                query_response = requests.get(
+                    person_query.format(STAGE, user['givenName'],
+                                        user['familyName']))
                 if query_response.status_code != 200:
                     print('GET /person/ {}'.format(resp.status_code))
                 if query_response.json() != []:
-                    arp_dict[user['username']]['scn'] = query_response.json()[0]['systemControlNumber']
+                    arp_dict[user['username']]['scn'] = query_response.json(
+                    )[0]['systemControlNumber']
 
 
 def delete_files_from_s3():
@@ -43,65 +50,83 @@ def delete_files_from_s3():
         object_keys = []
         files = listdir('./publications/files')
         for s3_object in s3_objects['Contents']:
-            head = s3_client.head_object(
-                Bucket=s3_bucket_name,
-                Key=s3_object['Key']
-            )
+            head = s3_client.head_object(Bucket=s3_bucket_name,
+                                         Key=s3_object['Key'])
 
-            filename = head['ContentDisposition'].replace('filename=', '').replace('"', '')
+            filename = head['ContentDisposition'].replace('filename=',
+                                                          '').replace('"', '')
 
             if filename in files:
-                object_keys.append({
-                    'Key': s3_object['Key']
-                })
+                object_keys.append({'Key': s3_object['Key']})
 
-        s3_client.delete_objects(Bucket=s3_bucket_name, Delete = {
-            'Objects': object_keys
-        })    
+        s3_client.delete_objects(Bucket=s3_bucket_name,
+                                 Delete={'Objects': object_keys})
     return
+
 
 def add_files_to_s3():
     files = listdir('./publications/files')
     for import_file in files:
         key = str(uuid.uuid4())
         file_dict[import_file] = key
-        with open('./publications/files/{}'.format(import_file),'rb') as import_file_body:
-            s3_client.put_object(Bucket=s3_bucket_name, Key=key, Body=import_file_body, 
-                ContentDisposition='filename="{}"'.format(import_file), ContentType='text/plain')
+        with open('./publications/files/{}'.format(import_file),
+                  'rb') as import_file_body:
+            s3_client.put_object(
+                Bucket=s3_bucket_name,
+                Key=key,
+                Body=import_file_body,
+                ContentDisposition='filename="{}"'.format(import_file),
+                ContentType='text/plain')
     return
 
-def scan_publications():
-    response = dynamodb_client.scan(TableName=publications_tablename)
 
+def scan_publications():
+    print('scanning publications')
+    response = dynamodb_client.scan(TableName=publications_tablename)
     return response['Items']
+
 
 def delete_publications():
     publications = scan_publications()
     for publication in publications:
         modifiedDate = publication['modifiedDate']['S']
         identifier = publication['identifier']['S']
-        if modifiedDate == '2020-01-01T00:00:00.000000Z':
-            response = dynamodb_client.delete_item(
-                TableName=publications_tablename,
-                Key={
-                    'identifier': { 'S': identifier},
-                    'modifiedDate': { 'S': modifiedDate}
-                })
+        if 'entityDescription' in publication:
+            tags = publication['entityDescription']['M']['tags']['L']
+            if {'S': 'Test'} in tags:
+                print(tags)
+                response = dynamodb_client.delete_item(
+                    TableName=publications_tablename,
+                    Key={
+                        'identifier': {
+                            'S': identifier
+                        },
+                        'modifiedDate': {
+                            'S': modifiedDate
+                        }
+                    })
     return
 
 
 def put_item(new_publication):
 
     response = dynamodb_client.put_item(TableName=publications_tablename,
-                               Item=new_publication)
+                                        Item=new_publication)
     return response
 
+
 def get_customer(username):
-    response = dynamodb_client.get_item(TableName=user_tablename, Key={
-        'PrimaryKeyHashKey': {'S': 'USER#{}'.format(username)},
-        'PrimaryKeyRangeKey': {'S': 'USER'},
-    })
+    response = dynamodb_client.get_item(TableName=user_tablename,
+                                        Key={
+                                            'PrimaryKeyHashKey': {
+                                                'S': 'USER#{}'.format(username)
+                                            },
+                                            'PrimaryKeyRangeKey': {
+                                                'S': 'USER'
+                                            },
+                                        })
     return response['Item']['institution']['S']
+
 
 def create_publications():
     with open(publication_template_file_name) as publication_template_file:
@@ -116,28 +141,43 @@ def create_publications():
 
             new_publication = copy.deepcopy(publication_template)
             new_publication['identifier']['S'] = str(uuid.uuid4())
-            new_publication['entityDescription']['M']['mainTitle']['S'] = test_publication['title']
-            new_publication['entityDescription']['M']['reference']['M']['publicationContext']['M']['type']['S'] = test_publication['publication_context_type']
-            new_publication['entityDescription']['M']['reference']['M']['publicationInstance']['M']['type']['S'] = test_publication['publication_instance_type']
-            new_publication['fileSet']['M']['files']['L'][0]['M']['identifier']['S'] = file_dict[test_publication['file_name']]
-            new_publication['fileSet']['M']['files']['L'][0]['M']['name']['S'] = test_publication['file_name']
+            new_publication['entityDescription']['M']['mainTitle'][
+                'S'] = test_publication['title']
+            new_publication['entityDescription']['M']['reference']['M'][
+                'publicationContext']['M']['type']['S'] = test_publication[
+                    'publication_context_type']
+            new_publication['entityDescription']['M']['reference']['M'][
+                'publicationInstance']['M']['type']['S'] = test_publication[
+                    'publication_instance_type']
+            new_publication['fileSet']['M']['files']['L'][0]['M'][
+                'identifier']['S'] = file_dict[test_publication['file_name']]
+            new_publication['fileSet']['M']['files']['L'][0]['M']['name'][
+                'S'] = test_publication['file_name']
             new_publication['owner']['S'] = test_publication['owner']
             new_publication['publisher']['M']['id']['S'] = customer
             new_publication['publisherId']['S'] = customer
-            new_publication['publisherOwnerDate']['S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(customer, test_publication['owner'])
-            new_publication['status']['S']= test_publication['status']
+            new_publication['publisherOwnerDate'][
+                'S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(
+                    customer, test_publication['owner'])
+            new_publication['status']['S'] = test_publication['status']
 
             if test_publication['contributor'] != '':
                 contributor = test_publication['contributor']
-                with open('./publications/contributors.json') as contributor_template_file:
+                with open('./publications/contributors.json'
+                          ) as contributor_template_file:
                     contributor_template = json.load(contributor_template_file)
 
                     new_contributor = copy.deepcopy(contributor_template)
                     new_contributor['M']['email']['S'] = contributor
-                    new_contributor['M']['identity']['M']['arpId']['S'] = arp_dict[contributor]['scn']
-                    new_contributor['M']['identity']['M']['name']['S'] = '{},{}'.format(arp_dict[contributor]['familyName'], arp_dict[contributor]['givenName'])
-                    
-                    new_publication['entityDescription']['M']['contributors']['L'].append(new_contributor)
+                    new_contributor['M']['identity']['M']['arpId'][
+                        'S'] = arp_dict[contributor]['scn']
+                    new_contributor['M']['identity']['M']['name'][
+                        'S'] = '{},{}'.format(
+                            arp_dict[contributor]['familyName'],
+                            arp_dict[contributor]['givenName'])
+
+                    new_publication['entityDescription']['M']['contributors'][
+                        'L'].append(new_contributor)
 
             result = put_item(new_publication)
 
@@ -150,3 +190,7 @@ def run():
 
     delete_publications()
     create_publications()
+
+
+if __name__ == '__main__':
+    run()

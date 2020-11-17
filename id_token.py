@@ -2,15 +2,14 @@ import boto3
 import uuid
 import os
 
-USER_POOL_ID = os.environ['AWS_USER_POOL_ID']
-CLIENT_ID = os.environ['AWS_USER_POOL_WEB_CLIENT_ID']
+ssm = boto3.client('ssm')
+USER_POOL_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_ID',
+                                 WithDecryption=False)['Parameter']['Value']
+CLIENT_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_WEB_CLIENT_ID',
+                              WithDecryption=False)['Parameter']['Value']
+
 
 def get_id_token(username, client):
-    if not USER_POOL_ID:
-        quit('Set environment variable AWS_USER_POOL_ID to correct User Pool Id')
-
-    if not CLIENT_ID:
-        quit('Set environment variable AWS_CLIENT_ID to correct Client Id')
 
     password = 'P%-' + str(uuid.uuid4())
     response = client.admin_set_user_password(

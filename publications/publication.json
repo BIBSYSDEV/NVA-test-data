@@ -108,7 +108,7 @@
         }
       },
       "tags": {
-        "L": []
+        "L": [{"S":"Test"}]
       },
       "type": {
         "S": "EntityDescription"
