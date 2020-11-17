@@ -37,7 +37,7 @@ def map_user_to_arp():
                     person_query.format(STAGE, user['givenName'],
                                         user['familyName']))
                 if query_response.status_code != 200:
-                    print('GET /person/ {}'.format(resp.status_code))
+                    print('GET /person/ {}'.format(query_response.status_code))
                 if query_response.json() != []:
                     arp_dict[user['username']]['scn'] = query_response.json(
                     )[0]['systemControlNumber']
@@ -94,7 +94,6 @@ def delete_publications():
         if 'entityDescription' in publication:
             tags = publication['entityDescription']['M']['tags']['L']
             if {'S': 'Test'} in tags:
-                print(tags)
                 response = dynamodb_client.delete_item(
                     TableName=publications_tablename,
                     Key={
@@ -179,7 +178,7 @@ def create_publications():
                     new_publication['entityDescription']['M']['contributors'][
                         'L'].append(new_contributor)
 
-            result = put_item(new_publication)
+            put_item(new_publication)
 
 
 def run():
