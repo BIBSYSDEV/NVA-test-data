@@ -39,8 +39,7 @@ def create_customers():
                 new_customer = copy.deepcopy(customer_template)
                 new_customer['feideOrganizationId']['S'] = test_customer[
                     'feide_organization_id']
-                new_customer['identifier']['S'] = 'test_{}'.format(
-                    str(uuid.uuid4()))
+                new_customer['identifier']['S'] = str(uuid.uuid4())
 
                 result = put_item(new_customer)
 
