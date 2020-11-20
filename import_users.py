@@ -38,15 +38,6 @@ def findCustomer(org_number):
 
 
 def createRole(test_user):
-    if not USER_POOL_ID:
-        quit(
-            'Set environment variable AWS_USER_POOL_ID to correct User Pool Id'
-        )
-
-    if not CLIENT_ID:
-        quit(
-            'Set environment variable AWS_CLIENT_ID to correct COGNITO_CLIENT Id'
-        )
 
     with open(ROLE_TEMPLATE_FILE_NAME) as role_template_file:
         role_template = json.load(role_template_file)

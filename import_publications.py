@@ -55,12 +55,12 @@ def delete_files_from_s3():
 
             filename = head['ContentDisposition'].replace('filename=',
                                                           '').replace('"', '')
-
             if filename in files:
                 object_keys.append({'Key': s3_object['Key']})
 
-        s3_client.delete_objects(Bucket=s3_bucket_name,
-                                 Delete={'Objects': object_keys})
+        if(len(object_keys) > 0):
+            s3_client.delete_objects(Bucket=s3_bucket_name,
+                                     Delete={'Objects': object_keys})
     return
 
 
@@ -88,22 +88,24 @@ def scan_publications():
 
 def delete_publications():
     publications = scan_publications()
+    print(len(publications))
     for publication in publications:
         modifiedDate = publication['modifiedDate']['S']
         identifier = publication['identifier']['S']
-        if 'entityDescription' in publication:
-            tags = publication['entityDescription']['M']['tags']['L']
-            if {'S': 'Test'} in tags:
-                response = dynamodb_client.delete_item(
-                    TableName=publications_tablename,
-                    Key={
-                        'identifier': {
-                            'S': identifier
-                        },
-                        'modifiedDate': {
-                            'S': modifiedDate
-                        }
-                    })
+        owner = publication['owner']['S']
+        if 'test.no' in owner:
+            print(
+                'Deleting {} - {}'.format(publication['identifier']['S'], owner))
+            response = dynamodb_client.delete_item(
+                TableName=publications_tablename,
+                Key={
+                    'identifier': {
+                        'S': identifier
+                    },
+                    'modifiedDate': {
+                        'S': modifiedDate
+                    }
+                })
     return
 
 
@@ -121,7 +123,7 @@ def get_customer(username):
                                                 'S': 'USER#{}'.format(username)
                                             },
                                             'PrimaryKeyRangeKey': {
-                                                'S': 'USER'
+                                                'S': 'USER#{}'.format(username)
                                             },
                                         })
     return response['Item']['institution']['S']

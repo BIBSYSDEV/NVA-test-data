@@ -12,6 +12,8 @@ CLIENT_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_WEB_CLIENT_ID',
                               WithDecryption=False)['Parameter']['Value']
 STAGE = ssm.get_parameter(Name='/test/STAGE',
                           WithDecryption=False)['Parameter']['Value']
+CUSTOMER_ID = ssm.get_parameter(Name='/test/TEST_CUSTOMER',
+                                WithDecryption=False)['Parameter']['Value']
 
 person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
 
@@ -54,6 +56,8 @@ def run():
             connect_author = test_user['author']
             username = test_user['username']
             feideid_payload = {'identifier': username}
+
+            print(username)
 
             idToken = get_id_token(username, client)
 

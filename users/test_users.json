@@ -78,5 +78,15 @@
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "No role",
+    "username": "test-user-with-no-role@test.no",
+    "role": "User",
+    "author": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
   }
 ]
