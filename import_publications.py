@@ -40,7 +40,7 @@ def map_user_to_arp():
                     print('GET /person/ {}'.format(query_response.status_code))
                 if query_response.json() != []:
                     arp_dict[user['username']]['scn'] = query_response.json(
-                    )[0]['systemControlNumber']
+                    )[0]['id']
 
 
 def delete_files_from_s3():

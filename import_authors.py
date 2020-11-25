@@ -30,8 +30,7 @@ def connect_author_to_feide(connect_author, connect_scn, idToken, scn,
             format(STAGE, scn),
             json=feideid_payload)
         if not connect_response:
-            print('POST /person/ {}'.format(connect_response.status_code))
-        if not connect_response:
+            print(connect_response.__dict__)
             print('POST /person/ {}'.format(connect_response.status_code))
     if not connect_author:
         token = 'Bearer ' + idToken
@@ -77,7 +76,7 @@ def run():
                     print('POST /person/ {}'.format(
                         create_response.status_code))
                 else:
-                    scn = create_response['systemControlNumber']
+                    scn = create_response['id']
                     connect_author_to_feide(connect_author=connect_author,
                                             connect_scn=scn,
                                             idToken=idToken,
@@ -85,7 +84,7 @@ def run():
                                             feideid_payload=feideid_payload)
             else:
                 for item in query_response.json():
-                    scn = item['systemControlNumber']
+                    scn = item['id']
                     connect_author_to_feide(connect_author=connect_author,
                                             connect_scn=scn,
                                             idToken=idToken,

@@ -1,4 +1,4 @@
-export AWS_USER_POOL_ID=
-export AWS_USER_POOL_WEB_CLIENT_ID=
+export AWS_USER_POOL_ID=eu-west-1_ZgmwmNtMp
+export AWS_USER_POOL_WEB_CLIENT_ID=5lvkqvapt1bbbnalce5qu3agbi
 
-python3 ../aws-cli-tools/samlauth/samlauth.py -a NVAsandbox
+python3 ../aws-cli-tools/samlauth/samlauth.py -a NVAdev
