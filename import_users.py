@@ -134,7 +134,7 @@ def run():
                         attribute['Value'] = '{} {}'.format(
                             given_name, family_name)
                     if attribute['Name'] == 'custom:orgNumber':
-                        attribute['Value'] = 'feide:{}'.format(org_number)
+                        attribute['Value'] = org_number
                     if attribute['Name'] == 'custom:cristinId':
                         attribute['Value'] = cristinId
                     if attribute['Name'] == 'custom:affiliation':

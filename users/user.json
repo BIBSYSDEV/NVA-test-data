@@ -16,6 +16,10 @@
     "Value": "TestOrg"
   },
   {
+    "Name": "custom:orgName",
+    "Value": "TestOrg"
+  },
+  {
     "Name": "name",
     "Value": "###################"
   },
@@ -26,10 +30,6 @@
   {
     "Name": "custom:orgNumber",
     "Value": "###################"
-  },
-  {
-    "Name": "custom:customerId",
-    "Value": "https://api.{}.nva.aws.unit.no/{}"
   },
   {
     "Name": "custom:cristinId",

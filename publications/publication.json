@@ -50,13 +50,22 @@
       },
       "date": {
         "M": {
+          "day": {
+            "S": "01"
+          },
+          "month": {
+            "S": "01"
+          },
           "type": {
             "S": "PublicationDate"
+          },
+          "year": {
+            "S": "2020"
           }
         }
       },
       "language": {
-        "S": ""
+        "S": "http://lexvo.org/id/iso639-3/eng"
       },
       "mainTitle": {
         "S": "####################"
@@ -81,7 +90,7 @@
                 "S": "British Journal of Neurosurgery"
               },
               "type": {
-                "S": "######################"
+                "S": "Journal"
               }
             }
           },
@@ -108,7 +117,11 @@
         }
       },
       "tags": {
-        "L": [{"S":"Test"}]
+        "L": [
+          {
+            "S": "Test"
+          }
+        ]
       },
       "type": {
         "S": "EntityDescription"

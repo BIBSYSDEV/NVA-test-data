@@ -1,20 +1,11 @@
 [
   {
     "familyName": "TestUser",
-    "givenName": "End-to-end",
-    "username": "test-user-end-to-end@test.no",
-    "role": "Creator",
-    "author": false,
-    "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
-  },
-  {
-    "familyName": "TestUser",
     "givenName": "Withauthor",
     "username": "test-user-with-author@test.no",
     "role": "Creator",
     "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
@@ -25,6 +16,7 @@
     "username": "test-user-app-admin@test.no",
     "role": "App-admin",
     "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
@@ -35,6 +27,7 @@
     "username": "test-user-curator@test.no",
     "role": "Curator",
     "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
@@ -45,6 +38,7 @@
     "username": "test-user-editor@test.no",
     "role": "Editor",
     "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
@@ -55,6 +49,7 @@
     "username": "test-user-inst-admin@test.no",
     "role": "Institution-admin",
     "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
@@ -65,9 +60,21 @@
     "username": "test-user-add-institution@test.no",
     "role": "Creator",
     "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Change institution",
+    "username": "test-user-change-institution@test.no",
+    "role": "Creator",
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "914086434",
+    "cristinId": "https://api.cristin.no/v2/institutions/194"
   },
   {
     "familyName": "TestUser",
@@ -75,6 +82,7 @@
     "username": "test-user-with-institution-remove-institution@test.no",
     "role": "Creator",
     "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
@@ -85,6 +93,40 @@
     "username": "test-user-with-no-role@test.no",
     "role": "User",
     "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Remove orcid",
+    "username": "test-user-remove-existing-orcid@test.no",
+    "role": "Creator",
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Not customer",
+    "username": "test-user-not-customer@test.no",
+    "role": "Creator",
+    "author": true,
+    "orcid": false,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "0987654321",
+    "cristinId": "https://api.cristin.no/v2/institutions/0987654321"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Siri",
+    "username": "test-user-siri@test.no",
+    "role": "Creator",
+    "author": true,
+    "orcid": true,
     "affiliation": "[member, employee, staff]",
     "orgNumber": "919477822",
     "cristinId": "https://api.cristin.no/v2/institutions/20202"
