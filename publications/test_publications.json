@@ -28,8 +28,8 @@
     "file_identifier": "lorem_ipsum",
     "file_name": "lorem_ipsum.txt",
     "owner": "test-user-with-author@test.no",
-    "status": "REJECTED",
+    "status": "DRAFT",
     "contributor": "test-user-with-author@test.no",
-    "title": "Deleted publication"
+    "title": "Delete publication"
   }
 ]
