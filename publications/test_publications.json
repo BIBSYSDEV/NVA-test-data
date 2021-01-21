@@ -6,7 +6,7 @@
     "file_identifier": "lorem_ipsum",
     "file_name": "lorem_ipsum.txt",
     "owner": "test-user-with-author@test.no",
-    "status": "Draft",
+    "status": "DRAFT",
     "contributor": "",
     "title": "Draft publication"
   },
@@ -17,9 +17,9 @@
     "file_identifier": "lorem_ipsum",
     "file_name": "lorem_ipsum.txt",
     "owner": "test-user-with-author@test.no",
-    "status": "Rejected",
-    "contributor": "",
-    "title": "Rejected publication"
+    "status": "PUBLISHED",
+    "contributor": "test-user-with-author@test.no",
+    "title": "Published publication"
   },
   {
     "publication_type": "JournalContent",
@@ -28,8 +28,8 @@
     "file_identifier": "lorem_ipsum",
     "file_name": "lorem_ipsum.txt",
     "owner": "test-user-with-author@test.no",
-    "status": "Published",
+    "status": "REJECTED",
     "contributor": "test-user-with-author@test.no",
-    "title": "Rejected publication"
+    "title": "Deleted publication"
   }
 ]
