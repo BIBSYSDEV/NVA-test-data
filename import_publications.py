@@ -83,7 +83,14 @@ def add_files_to_s3():
 def scan_publications():
     print('scanning publications')
     response = dynamodb_client.scan(TableName=publications_tablename)
-    return response['Items']
+    scanned_publications = response['Items']
+    more_items = 'LastEvaluatedKey' in response
+    while more_items:
+        start_key = response['LastEvaluatedKey']
+        response = dynamodb_client.scan(TableName=publications_tablename, ExclusiveStartKey=start_key)
+        scanned_publications.extend(response['Items'])
+        more_items = 'LastEvaluatedKey' in response
+    return scanned_publications
 
 
 def delete_publications():
@@ -96,16 +103,19 @@ def delete_publications():
         if 'test.no' in owner:
             print(
                 'Deleting {} - {}'.format(publication['identifier']['S'], owner))
-            response = dynamodb_client.delete_item(
-                TableName=publications_tablename,
-                Key={
-                    'identifier': {
-                        'S': identifier
-                    },
-                    'modifiedDate': {
-                        'S': modifiedDate
-                    }
-                })
+            try:
+                response = dynamodb_client.delete_item(
+                    TableName=publications_tablename,
+                    Key={
+                        'identifier': {
+                            'S': identifier
+                        },
+                        'modifiedDate': {
+                            'S': modifiedDate
+                        }
+                    })
+            except e:
+                print(e)
     return
 
 
