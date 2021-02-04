@@ -32,7 +32,6 @@ def findCustomer(org_number):
             ProjectionExpression="identifier",
             TableName=CUSTOMER_TABLENAME,
             IndexName='byOrgNumber')
-        print(response['Items'][0]['identifier']['S'])
         return response['Items'][0]['identifier']['S']
     except:
         print('Customer not found: {}'.format(org_number))
@@ -64,7 +63,6 @@ def createRole(test_user):
         new_role['PrimaryKeyRangeKey']['S'] = 'USER#{}'.format(username)
         new_role['SecondaryIndex1HashKey']['S'] = customer_iri
         new_role['SecondaryIndex1RangeKey']['S'] = username
-        print(role)
         for user_role in role:
             print(user_role)
             new_role['roles']['L'].append(roles[user_role])
