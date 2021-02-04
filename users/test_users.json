@@ -123,6 +123,45 @@
   },
   {
     "familyName": "TestUser",
+    "givenName": "Subunit",
+    "username": "test-user-subunit@test.no",
+    "role": [
+      "CREATOR"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Subsubunit",
+    "username": "test-user-subsubunit@test.no",
+    "role": [
+      "CREATOR"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Subsubsubunit",
+    "username": "test-user-subsubsubunit@test.no",
+    "role": [
+      "CREATOR"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
     "givenName": "No role",
     "username": "test-user-with-no-role@test.no",
     "role": [],
