@@ -18,6 +18,7 @@ CUSTOMER_ID = ssm.get_parameter(Name='/test/TEST_CUSTOMER',
                                 WithDecryption=False)['Parameter']['Value']
 
 ROLE_TEMPLATE_FILE_NAME = './users/role.json'
+ROLES_FILE = './users/roles.json'
 DB_CLIENT = boto3.client('dynamodb')
 
 
@@ -43,6 +44,8 @@ def createRole(test_user):
     with open(ROLE_TEMPLATE_FILE_NAME) as role_template_file:
         role_template = json.load(role_template_file)
 
+        roles = json.load(open(ROLES_FILE))
+
         given_name = test_user['givenName']
         family_name = test_user['familyName']
         username = test_user['username']
@@ -61,9 +64,10 @@ def createRole(test_user):
         new_role['PrimaryKeyRangeKey']['S'] = 'USER#{}'.format(username)
         new_role['SecondaryIndex1HashKey']['S'] = customer_iri
         new_role['SecondaryIndex1RangeKey']['S'] = username
-        new_role['roles']['L'][0]['M']['name']['S'] = role
-        new_role['roles']['L'][0]['M']['PrimaryKeyHashKey'][
-            'S'] = 'ROLE#{}'.format(role)
+        print(role)
+        for user_role in role:
+            print(user_role)
+            new_role['roles']['L'].append(roles[user_role])
         new_role['username']['S'] = username
 
         response = DB_CLIENT.put_item(TableName=ROLE_TABLENAME, Item=new_role)

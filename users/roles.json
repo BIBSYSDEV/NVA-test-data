@@ -1,0 +1,108 @@
+{
+    "APP-ADMIN": {
+        "M": {
+            "accessRights": {
+                "L": []
+            },
+            "name": {
+                "S": "App-admin"
+            },
+            "PrimaryKeyHashKey": {
+                "S": "ROLE#App-admin"
+            },
+            "PrimaryKeyRangeKey": {
+                "S": "ROLE#App-admin"
+            },
+            "type": {
+                "S": "ROLE"
+            }
+        }
+    },
+    "CURATOR": {
+        "M": {
+            "accessRights": {
+                "L": [
+                    {
+                        "S": "APPROVE_DOI_REQUEST"
+                    },
+                    {
+                        "S": "REJECT_DOI_REQUEST"
+                    }
+                ]
+            },
+            "name": {
+                "S": "Curator"
+            },
+            "PrimaryKeyHashKey": {
+                "S": "ROLE#Curator"
+            },
+            "PrimaryKeyRangeKey": {
+                "S": "ROLE#Curator"
+            },
+            "type": {
+                "S": "ROLE"
+            }
+        }
+    },
+    "CREATOR": {
+        "M": {
+            "accessRights": {
+                "L": [
+                    {
+                        "S": "READ_DOI_REQUEST"
+                    }
+                ]
+            },
+            "name": {
+                "S": "Creator"
+            },
+            "PrimaryKeyHashKey": {
+                "S": "ROLE#Creator"
+            },
+            "PrimaryKeyRangeKey": {
+                "S": "ROLE#Creator"
+            },
+            "type": {
+                "S": "ROLE"
+            }
+        }
+    },
+    "INST-ADMIN": {
+        "M": {
+            "accessRights": {
+                "L": []
+            },
+            "name": {
+                "S": "Institution-admin"
+            },
+            "PrimaryKeyHashKey": {
+                "S": "ROLE#Institution-admin"
+            },
+            "PrimaryKeyRangeKey": {
+                "S": "ROLE#Institution-admin"
+            },
+            "type": {
+                "S": "ROLE"
+            }
+        }
+    },
+    "EDITOR": {
+        "M": {
+            "accessRights": {
+                "L": []
+            },
+            "name": {
+                "S": "Editor"
+            },
+            "PrimaryKeyHashKey": {
+                "S": "ROLE#Editor"
+            },
+            "PrimaryKeyRangeKey": {
+                "S": "ROLE#Editor"
+            },
+            "type": {
+                "S": "ROLE"
+            }
+        }
+    }
+}

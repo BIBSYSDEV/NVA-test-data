@@ -21,40 +21,7 @@
     "S": "####################"
   },
   "roles": {
-    "L": [
-      {
-        "M": {
-          "name": {
-            "S": "####################"
-          },
-          "PrimaryKeyHashKey": {
-            "S": "####################"
-          },
-          "PrimaryKeyRangeKey": {
-            "S": "ROLE"
-          },
-          "type": {
-            "S": "ROLE"
-          }
-        }
-      },
-      {
-        "M": {
-          "name": {
-            "S": "User"
-          },
-          "PrimaryKeyHashKey": {
-            "S": "ROLE#User"
-          },
-          "PrimaryKeyRangeKey": {
-            "S": "ROLE"
-          },
-          "type": {
-            "S": "ROLE"
-          }
-        }
-      }
-    ]
+    "L": []
   },
   "type": {
     "S": "USER"
