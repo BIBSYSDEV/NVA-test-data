@@ -64,7 +64,6 @@ def createRole(test_user):
         new_role['SecondaryIndex1HashKey']['S'] = customer_iri
         new_role['SecondaryIndex1RangeKey']['S'] = username
         for user_role in role:
-            print(user_role)
             new_role['roles']['L'].append(roles[user_role])
         new_role['username']['S'] = username
 

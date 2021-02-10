@@ -121,8 +121,11 @@ def delete_publications():
 
 def put_item(new_publication):
 
-    response = dynamodb_client.put_item(TableName=publications_tablename,
-                                        Item=new_publication)
+    try:
+        response = dynamodb_client.put_item(TableName=publications_tablename,
+                                            Item=new_publication)
+    except e:
+        print(e)
     return response
 
 
@@ -189,7 +192,7 @@ def create_publications():
 
                     new_publication['entityDescription']['M']['contributors'][
                         'L'].append(new_contributor)
-
+            print(test_publication['title'])
             put_item(new_publication)
 
 
