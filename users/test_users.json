@@ -57,7 +57,7 @@
   {
     "familyName": "TestUser",
     "givenName": "Institution-admin",
-    "username": "test-user-inst-admin@test.no",
+    "username": "test-user-first-inst-admin@test.no",
     "role": [
       "CREATOR",
       "INST-ADMIN"
@@ -71,7 +71,7 @@
   {
     "familyName": "TestUser",
     "givenName": "Institution-admin-2",
-    "username": "test-user-inst-admin-2@test.no",
+    "username": "test-user-second-inst-admin@test.no",
     "role": [
       "CREATOR",
       "INST-ADMIN"

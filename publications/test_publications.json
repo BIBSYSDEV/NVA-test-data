@@ -52,7 +52,7 @@
     "owner": "test-user-with-author@test.no",
     "status": "DRAFT",
     "contributor": "test-user-with-author@test.no",
-    "title": "Delete publication"
+    "title": "Delete registration"
   },
   {
     "publication_type": "JournalContent",
