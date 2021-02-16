@@ -4,6 +4,7 @@ import boto3
 import os
 import uuid
 from id_token import get_id_token
+import clear_arp
 
 ssm = boto3.client('ssm')
 USER_POOL_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_ID',
@@ -46,7 +47,6 @@ def connect_author(id_token, id,
             print('DELETE /person/{}/identifiers/{}/delete {}'.format(
                 scn, connectionType, delete_response.status_code))
 
-
 def create_author(family_name, given_name, id_token, has_author, payload):
     inverted_name = '{}, {}'.format(family_name, given_name)
     new_author = {'invertedname': inverted_name}
@@ -68,6 +68,7 @@ def create_author(family_name, given_name, id_token, has_author, payload):
 
 
 def run():
+    clear_arp.run()
     print('authors...')
     with open(test_users_file_name) as test_users_file:
 
