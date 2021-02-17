@@ -135,6 +135,10 @@ def run():
                             'Name'] == 'custom:commonName':
                         attribute['Value'] = '{} {}'.format(
                             given_name, family_name)
+                    if attribute['Name'] == 'given_name':
+                        attribute['Value'] = given_name
+                    if attribute['Name'] == 'family_name':
+                        attribute['Value'] = family_name
                     if attribute['Name'] == 'custom:orgNumber':
                         attribute['Value'] = org_number
                     if attribute['Name'] == 'custom:cristinId':

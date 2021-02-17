@@ -24,6 +24,14 @@
     "Value": "###################"
   },
   {
+    "Name": "given_name",
+    "Value": "###################"
+  },
+  {
+    "Name": "family_name",
+    "Value": "###################"
+  },
+  {
     "Name": "custom:commonName",
     "Value": "###################"
   },
