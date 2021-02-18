@@ -1,5 +1,11 @@
 [
     {
         "name": "TestUser, No Arp"
+    },
+    {
+        "name": "TestUser, Connect ORCID"
+    },
+    {
+        "name": "TestUser, Connect ARP"
     }
 ]

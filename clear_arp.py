@@ -45,10 +45,9 @@ def create_authors():
                         }
                     ]
                 }
-                print(name)
                 payload = copy.deepcopy(author_template)
                 payload['marcdata'].append(name)
-                # response = requests.post(CREATE_URL, json=payload, headers=BARE_HEADER)
+                response = requests.post(CREATE_URL, json=payload, headers=BARE_HEADER)
                 # print(response)               
 
 def run():
