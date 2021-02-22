@@ -9,8 +9,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -22,8 +22,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -36,8 +36,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -50,8 +50,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -64,8 +64,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -78,13 +78,13 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
-    "givenName": "Institution-admin-2",
-    "username": "test-user-second-inst-admin@test.no",
+    "givenName": "Second Institution-admin-1",
+    "username": "test-user-second-inst-admin-1@test.no",
     "role": [
       "CREATOR",
       "INST-ADMIN"
@@ -92,8 +92,50 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "2222222222",
+    "cristinId": "https://api.cristin.no/v2/institutions/2222222222"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Second Institution-admin-2",
+    "username": "test-user-second-inst-admin-2@test.no",
+    "role": [
+      "CREATOR",
+      "INST-ADMIN"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "2222222222",
+    "cristinId": "https://api.cristin.no/v2/institutions/2222222222"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Second Institution Curator",
+    "username": "test-user-second-inst-curator@test.no",
+    "role": [
+      "CREATOR",
+      "CURATOR"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "2222222222",
+    "cristinId": "https://api.cristin.no/v2/institutions/2222222222"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Second Institution Editor",
+    "username": "test-user-second-inst-editor@test.no",
+    "role": [
+      "CREATOR",
+      "EDITOR"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "2222222222",
+    "cristinId": "https://api.cristin.no/v2/institutions/2222222222"
   },
   {
     "familyName": "TestUser",
@@ -105,8 +147,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -131,8 +173,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -144,8 +186,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -157,8 +199,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -170,8 +212,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -181,8 +223,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -194,8 +236,8 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -260,8 +302,8 @@
     "author": false,
     "orcid": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -273,7 +315,7 @@
     "author": true,
     "orcid": true,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "919477822",
-    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   }
 ]
