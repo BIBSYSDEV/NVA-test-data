@@ -152,4 +152,5 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,node
 
 __pycache__/*
+*/__pycache__/*
 *.pyc

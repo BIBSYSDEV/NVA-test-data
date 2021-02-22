@@ -4,6 +4,7 @@ import boto3
 import os
 import uuid
 from id_token import get_id_token
+import users.clear_arp
 
 ssm = boto3.client('ssm')
 USER_POOL_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_ID',
@@ -68,6 +69,7 @@ def create_author(family_name, given_name, id_token, has_author, payload):
 
 
 def run():
+    users.clear_arp.run()
     print('authors...')
     with open(test_users_file_name) as test_users_file:
 
