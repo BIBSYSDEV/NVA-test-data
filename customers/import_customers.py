@@ -40,6 +40,10 @@ def create_customers():
                 new_customer['feideOrganizationId']['S'] = test_customer[
                     'feide_organization_id']
                 new_customer['identifier']['S'] = str(uuid.uuid4())
+                new_customer['cristinId']['S'] = test_customer['cristinId']
+                new_customer['displayName']['S'] = test_customer['displayName']
+                new_customer['name']['S'] = test_customer['name']
+                new_customer['shortName']['S'] = test_customer['shortName']
 
                 result = put_item(new_customer)
 

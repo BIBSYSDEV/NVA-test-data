@@ -8,7 +8,18 @@
     "owner": "test-user-with-author@test.no",
     "status": "DRAFT",
     "contributor": "",
-    "title": "Draft publication"
+    "title": "Draft registration"
+  },
+  {
+    "publication_type": "JournalContent",
+    "publication_context_type": "Journal",
+    "publication_instance_type": "JournalArticle",
+    "file_identifier": "lorem_ipsum",
+    "file_name": "lorem_ipsum.txt",
+    "owner": "test-user-with-author@test.no",
+    "status": "DRAFT_FOR_DELETION",
+    "contributor": "",
+    "title": "Deleted Draft registration"
   },
   {
     "publication_type": "JournalContent",
@@ -19,7 +30,7 @@
     "owner": "test-user-with-author@test.no",
     "status": "PUBLISHED",
     "contributor": "test-user-with-author@test.no",
-    "title": "Published publication"
+    "title": "Published registration"
   },
   {
     "publication_type": "JournalContent",
@@ -30,7 +41,7 @@
     "owner": "test-user-with-author@test.no",
     "status": "PUBLISHED",
     "contributor": "test-user-with-author@test.no",
-    "title": "Published publication without DOI"
+    "title": "Published registration without DOI"
   },
   {
     "publication_type": "JournalContent",
@@ -41,7 +52,7 @@
     "owner": "test-user-with-author@test.no",
     "status": "PUBLISHED",
     "contributor": "test-user-with-author@test.no",
-    "title": "Published publication requesting DOI"
+    "title": "Published registration requesting DOI"
   },
   {
     "publication_type": "JournalContent",
@@ -52,7 +63,7 @@
     "owner": "test-user-with-author@test.no",
     "status": "DRAFT",
     "contributor": "test-user-with-author@test.no",
-    "title": "Delete publication"
+    "title": "Delete registration"
   },
   {
     "publication_type": "JournalContent",

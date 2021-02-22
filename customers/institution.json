@@ -3,22 +3,22 @@
     "S": "2020-01-01T00:00:00.000Z"
   },
   "cristinId": {
-    "S": "https://api.cristin.no/v2/institutions/20202"
+    "S": "####################"
   },
   "displayName": {
-    "S": "Unit – Direktoratet for IKT og fellestjenester i høyere utdanning og forskning"
+    "S": "######################"
   },
   "feideOrganizationId": {
-    "S": "919477822"
+    "S": "##########"
   },
   "identifier": {
     "S": "######################"
   },
   "name": {
-    "S": "Unit – Direktoratet for IKT og fellestjenester i høyere utdanning og forskning"
+    "S": "######################"
   },
   "shortName": {
-    "S": "UNIT"
+    "S": "######################"
   },
   "type": {
     "S": "Customer"
