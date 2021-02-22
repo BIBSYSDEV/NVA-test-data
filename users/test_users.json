@@ -14,6 +14,19 @@
   },
   {
     "familyName": "TestUser",
+    "givenName": "Kari",
+    "username": "test-user-kari@test.no",
+    "role": [
+      "CREATOR"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
+  },
+  {
+    "familyName": "TestUser",
     "givenName": "App-admin",
     "username": "test-user-app-admin@test.no",
     "role": [
