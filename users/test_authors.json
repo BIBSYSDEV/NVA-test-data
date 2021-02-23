@@ -3,6 +3,9 @@
         "name": "TestUser, No ARP"
     },
     {
+        "name": "TestUser, No name in ARP"
+    },
+    {
         "name": "TestUser, Connect ORCID"
     },
     {
