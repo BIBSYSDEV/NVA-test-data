@@ -274,6 +274,17 @@
   },
   {
     "familyName": "TestUser",
+    "givenName": "Name in ARP",
+    "username": "test-user-name-in-arp@test.no",
+    "role": [],
+    "author": false,
+    "orcid": false,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "0987654321",
+    "cristinId": "https://api.cristin.no/v2/institutions/0987654321"
+  },
+  {
+    "familyName": "TestUser",
     "givenName": "Connect ARP",
     "username": "test-user-connect-arp@test.no",
     "role": [],
@@ -285,7 +296,7 @@
   },
   {
     "familyName": "TestUser",
-    "givenName": "No ARP",
+    "givenName": "No ORCID",
     "username": "test-user-no-orcid@test.no",
     "role": [],
     "author": false,
