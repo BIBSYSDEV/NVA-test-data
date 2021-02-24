@@ -4,7 +4,7 @@ import boto3
 import os
 import uuid
 from id_token import get_id_token
-import clear_arp
+import users.clear_arp
 
 ssm = boto3.client('ssm')
 USER_POOL_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_ID',
@@ -89,7 +89,7 @@ def update_author(author, id_token, has_author, has_orcid, payload):
 
 
 def run():
-    clear_arp.run()
+    users.clear_arp.run()
     print('authors...')
     with open(test_users_file_name) as test_users_file:
 

@@ -1,7 +1,7 @@
-import import_authors
-import import_users
-import import_customers
-import import_publications
+import users.import_authors
+import users.import_users
+import customers.import_customers
+import publications.import_publications
 
 import_customers.run()
 import_users.run()

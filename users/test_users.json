@@ -296,7 +296,7 @@
   },
   {
     "familyName": "TestUser",
-    "givenName": "No ARP",
+    "givenName": "No ORCID",
     "username": "test-user-no-orcid@test.no",
     "role": [],
     "author": false,
