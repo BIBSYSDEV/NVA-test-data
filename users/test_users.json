@@ -258,19 +258,8 @@
     "author": false,
     "orcid": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "0987654321",
-    "cristinId": "https://api.cristin.no/v2/institutions/0987654321"
-  },
-  {
-    "familyName": "TestUser",
-    "givenName": "No ARP",
-    "username": "test-user-no-arp@test.no",
-    "role": [],
-    "author": false,
-    "orcid": false,
-    "affiliation": "[member, employee, staff]",
-    "orgNumber": "0987654321",
-    "cristinId": "https://api.cristin.no/v2/institutions/0987654321"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -280,8 +269,19 @@
     "author": false,
     "orcid": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "0987654321",
-    "cristinId": "https://api.cristin.no/v2/institutions/0987654321"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "No ARP",
+    "username": "test-user-no-arp@test.no",
+    "role": [],
+    "author": false,
+    "orcid": false,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -291,8 +291,8 @@
     "author": false,
     "orcid": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "0987654321",
-    "cristinId": "https://api.cristin.no/v2/institutions/0987654321"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",
@@ -302,8 +302,8 @@
     "author": false,
     "orcid": false,
     "affiliation": "[member, employee, staff]",
-    "orgNumber": "0987654321",
-    "cristinId": "https://api.cristin.no/v2/institutions/0987654321"
+    "orgNumber": "1111111111",
+    "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
   },
   {
     "familyName": "TestUser",

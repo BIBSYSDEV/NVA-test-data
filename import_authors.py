@@ -61,10 +61,11 @@ def create_author(family_name, given_name, id_token, has_author, has_orcid, payl
                 create_response.status_code))
         else:
             id = create_response.json()['id'].split('/')[-1]
-            connect_author(id_token=id_token,
-                        id=id,
-                        payload=payload,
-                        connection_type='feideid')
+            if has_author:
+                connect_author(id_token=id_token,
+                            id=id,
+                            payload=payload,
+                            connection_type='feideid')
             if has_orcid:
                 connect_author(id_token=id_token,
                             id=id,
