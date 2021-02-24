@@ -51,25 +51,26 @@ def create_author(family_name, given_name, id_token, has_author, has_orcid, payl
     inverted_name = '{}, {}'.format(family_name, given_name)
     new_author = {'invertedname': inverted_name}
     token = 'Bearer ' + id_token
-    create_response = requests.post(
-        'https://api.{}.nva.aws.unit.no/person/'.format(STAGE),
-        json=new_author,
-        headers={'Authorization': token})
-    if not create_response:
-        print('POST /person/ {}'.format(
-            create_response.status_code))
-    else:
-        id = create_response.json()['id'].split('/')[-1]
-        if has_author:
-            connect_author(id_token=id_token,
-                           id=id,
-                           payload=payload,
-                           connection_type='feideid')
-        if has_orcid:
-            connect_author(id_token=id_token,
-                           id=id,
-                           payload=payload,
-                           connection_type='orcid')
+    if has_author:
+        create_response = requests.post(
+            'https://api.{}.nva.aws.unit.no/person/'.format(STAGE),
+            json=new_author,
+            headers={'Authorization': token})
+        if not create_response:
+            print('POST /person/ {}'.format(
+                create_response.status_code))
+        else:
+            id = create_response.json()['id'].split('/')[-1]
+            if has_author:
+                connect_author(id_token=id_token,
+                            id=id,
+                            payload=payload,
+                            connection_type='feideid')
+            if has_orcid:
+                connect_author(id_token=id_token,
+                            id=id,
+                            payload=payload,
+                            connection_type='orcid')
 
 def update_author(author, id_token, has_author, has_orcid, payload):
     id = author['id'].split('/')[-1]

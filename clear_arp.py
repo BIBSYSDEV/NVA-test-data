@@ -51,7 +51,7 @@ def create_authors():
                 # print(response)               
 
 def run():
-    delete_authors('test.no')
+    delete_authors('TestUser')
     create_authors()
 if __name__ == '__main__':
     run()
