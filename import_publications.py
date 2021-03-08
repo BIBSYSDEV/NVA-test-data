@@ -95,7 +95,6 @@ def scan_publications():
 
 def delete_publications():
     publications = scan_publications()
-    print(len(publications))
     for publication in publications:
         modifiedDate = publication['modifiedDate']['S']
         identifier = publication['identifier']['S']
@@ -141,6 +140,54 @@ def get_customer(username):
                                         })
     return response['Item']['institution']['S']
 
+def create_contributor(contributor):
+    with open('./publications/contributors.json'
+                ) as contributor_template_file:
+        contributor_template = json.load(contributor_template_file)
+
+        new_contributor = copy.deepcopy(contributor_template)
+        new_contributor['M']['email']['S'] = contributor
+        new_contributor['M']['identity']['M']['arpId'][
+            'S'] = arp_dict[contributor]['scn']
+        new_contributor['M']['identity']['M']['name'][
+            'S'] = '{},{}'.format(
+                arp_dict[contributor]['familyName'],
+                arp_dict[contributor]['givenName'])
+
+        return new_contributor
+
+def create_test_publication(publication_template, test_publication):
+    customer = get_customer(test_publication['owner'])
+
+    new_publication = copy.deepcopy(publication_template)
+    new_publication['identifier']['S'] = str(uuid.uuid4())
+    new_publication['entityDescription']['M']['mainTitle'][
+        'S'] = test_publication['title']
+    new_publication['entityDescription']['M']['reference']['M'][
+        'publicationContext']['M']['type']['S'] = test_publication[
+            'publication_context_type']
+    new_publication['entityDescription']['M']['reference']['M'][
+        'publicationInstance']['M']['type']['S'] = test_publication[
+            'publication_instance_type']
+    new_publication['fileSet']['M']['files']['L'][0]['M'][
+        'identifier']['S'] = file_dict[test_publication['file_name']]
+    new_publication['fileSet']['M']['files']['L'][0]['M']['name'][
+        'S'] = test_publication['file_name']
+    new_publication['owner']['S'] = test_publication['owner']
+    new_publication['publisher']['M']['id']['S'] = customer
+    new_publication['publisherId']['S'] = customer
+    new_publication['publisherOwnerDate'][
+        'S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(
+            customer, test_publication['owner'])
+    new_publication['status']['S'] = test_publication['status']
+
+    if test_publication['contributor'] != '':
+        contributor = test_publication['contributor']
+        new_contributor = create_contributor(contributor=contributor)
+        new_publication['entityDescription']['M']['contributors'][
+            'L'].append(new_contributor)
+
+    return new_publication
 
 def create_publications():
     with open(publication_template_file_name) as publication_template_file:
@@ -151,47 +198,10 @@ def create_publications():
         test_publications = json.load(test_publications_file)
         for test_publication in test_publications:
 
-            customer = get_customer(test_publication['owner'])
-
-            new_publication = copy.deepcopy(publication_template)
-            new_publication['identifier']['S'] = str(uuid.uuid4())
-            new_publication['entityDescription']['M']['mainTitle'][
-                'S'] = test_publication['title']
-            new_publication['entityDescription']['M']['reference']['M'][
-                'publicationContext']['M']['type']['S'] = test_publication[
-                    'publication_context_type']
-            new_publication['entityDescription']['M']['reference']['M'][
-                'publicationInstance']['M']['type']['S'] = test_publication[
-                    'publication_instance_type']
-            new_publication['fileSet']['M']['files']['L'][0]['M'][
-                'identifier']['S'] = file_dict[test_publication['file_name']]
-            new_publication['fileSet']['M']['files']['L'][0]['M']['name'][
-                'S'] = test_publication['file_name']
-            new_publication['owner']['S'] = test_publication['owner']
-            new_publication['publisher']['M']['id']['S'] = customer
-            new_publication['publisherId']['S'] = customer
-            new_publication['publisherOwnerDate'][
-                'S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(
-                    customer, test_publication['owner'])
-            new_publication['status']['S'] = test_publication['status']
-
-            if test_publication['contributor'] != '':
-                contributor = test_publication['contributor']
-                with open('./publications/contributors.json'
-                          ) as contributor_template_file:
-                    contributor_template = json.load(contributor_template_file)
-
-                    new_contributor = copy.deepcopy(contributor_template)
-                    new_contributor['M']['email']['S'] = contributor
-                    new_contributor['M']['identity']['M']['arpId'][
-                        'S'] = arp_dict[contributor]['scn']
-                    new_contributor['M']['identity']['M']['name'][
-                        'S'] = '{},{}'.format(
-                            arp_dict[contributor]['familyName'],
-                            arp_dict[contributor]['givenName'])
-
-                    new_publication['entityDescription']['M']['contributors'][
-                        'L'].append(new_contributor)
+            new_publication = create_test_publication(
+                publication_template=publication_template, 
+                test_publication=test_publication
+            )
             print(test_publication['title'])
             put_item(new_publication)
 

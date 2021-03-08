@@ -96,9 +96,9 @@ def run():
     with open(user_attribute_file_name) as json_file:
         user = json.load(json_file)
 
-        COGNITO_CLIENT = boto3.client('cognito-idp')
+        cognito_client = boto3.client('cognito-idp')
         cognito_test_users = []
-        response = COGNITO_CLIENT.list_users(UserPoolId=USER_POOL_ID)
+        response = cognito_client.list_users(UserPoolId=USER_POOL_ID)
         for cognito_user in response['Users']:
             for attribute in cognito_user['Attributes']:
                 if attribute['Name'] == 'custom:orgLegalName' and attribute[
@@ -106,7 +106,7 @@ def run():
                     cognito_test_users.append(cognito_user['Username'])
         for cognito_test_username in cognito_test_users:
             try:
-                response = COGNITO_CLIENT.admin_delete_user(
+                response = cognito_client.admin_delete_user(
                     UserPoolId=USER_POOL_ID, Username=cognito_test_username)
             except:
                 print('Error deleting users')
@@ -150,7 +150,7 @@ def run():
                             STAGE, CUSTOMER_ID)
 
                 try:
-                    response = COGNITO_CLIENT.admin_create_user(
+                    response = cognito_client.admin_create_user(
                         UserPoolId=USER_POOL_ID,
                         Username=username,
                         UserAttributes=user_attributes,
