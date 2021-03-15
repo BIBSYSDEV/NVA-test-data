@@ -1,0 +1,32 @@
+{
+    "data": {
+      "M": {}
+    },
+    "PK0": {
+      "S": "<type>:<customerId>:<userId>"
+    },
+    "PK1": {
+      "S": "<type>:Customer:<customerId>:Status:<status>"
+    },
+    "PK2": {
+      "S": "Customer:<customerId>:<type>:<resourceId>"
+    },
+    "PK3": {
+      "S": "<type>:<resourceId>"
+    },
+    "SK0": {
+      "S": "<type>:<resourceId>"
+    },
+    "SK1": {
+      "S": "<type>:<resourceId>"
+    },
+    "SK2": {
+      "S": "<resourceSort>:<type>:<resourceId>"
+    },
+    "SK3": {
+      "S": "<type>:<resourceId>"
+    },
+    "type": {
+      "S": "<type>"
+    }
+  }

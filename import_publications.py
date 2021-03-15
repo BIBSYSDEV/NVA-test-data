@@ -8,6 +8,7 @@ from os import listdir
 
 dynamodb_client = boto3.client('dynamodb')
 s3_client = boto3.client('s3')
+resource_template_file_name = './publications/resource.json'
 publication_template_file_name = './publications/publication.json'
 test_publications_file_name = './publications/test_publications.json'
 publications_tablename = 'nva_resources'
@@ -80,8 +81,8 @@ def add_files_to_s3():
     return
 
 
-def scan_publications():
-    print('scanning publications')
+def scan_resources():
+    print('scanning resourcess')
     response = dynamodb_client.scan(TableName=publications_tablename)
     scanned_publications = response['Items']
     more_items = 'LastEvaluatedKey' in response
@@ -94,27 +95,30 @@ def scan_publications():
 
 
 def delete_publications():
-    publications = scan_publications()
-    for publication in publications:
-        modifiedDate = publication['modifiedDate']['S']
-        identifier = publication['identifier']['S']
-        owner = publication['owner']['S']
-        if 'test.no' in owner:
-            print(
-                'Deleting {} - {}'.format(publication['identifier']['S'], owner))
-            try:
-                response = dynamodb_client.delete_item(
-                    TableName=publications_tablename,
-                    Key={
-                        'identifier': {
-                            'S': identifier
-                        },
-                        'modifiedDate': {
-                            'S': modifiedDate
-                        }
-                    })
-            except e:
-                print(e)
+    resources = scan_resources()
+    for resource in resources:
+        if resource['type'] == 'Resource':
+            publication = resource['data']
+            primary_partition_key = resource['PK0']
+            primary_sort_key = resource['SK0']
+            identifier = publication['identifier']['S']
+            owner = publication['owner']['S']
+            if 'test.no' in owner:
+                print(
+                    'Deleting {} - {}'.format(publication['identifier']['S'], owner))
+                try:
+                    response = dynamodb_client.delete_item(
+                        TableName=publications_tablename,
+                        Key={
+                            'PK0': {
+                                'S': primary_partition_key
+                            },
+                            'SK0': {
+                                'S': primary_sort_key
+                            }
+                        })
+                except e:
+                    print(e)
     return
 
 
@@ -123,8 +127,8 @@ def put_item(new_publication):
     try:
         response = dynamodb_client.put_item(TableName=publications_tablename,
                                             Item=new_publication)
-    except e:
-        print(e)
+    except:
+        print(sys.exc_info()[0])
     return response
 
 
@@ -156,11 +160,38 @@ def create_contributor(contributor):
 
         return new_contributor
 
-def create_test_publication(publication_template, test_publication):
-    customer = get_customer(test_publication['owner'])
+def create_pk0(pk0_template, customer, username):
+    pk0 = pk0_template.replace('<type>', 'Resource').replace('<customerId>', customer).replace('<userId>', username)
+    return pk0
 
+def create_pk1(pk1_template, customer, status):
+    pk1 = pk1_template.replace('<type>', 'Resource').replace('<customerId>', customer).replace('<status>', status)
+    return pk1
+
+def create_pk2(pk2_template, customer, identifier):
+    pk2 = pk2_template.replace('<type>', 'Resource').replace('<customerId>', customer).replace('<resourceId>', identifier)
+    return pk2
+
+def create_resource_key(template, identifier):
+    key = template.replace('<type>', 'Resource').replace('<resourceId>', identifier)
+    return key
+
+def create_resource(resource_template, customer, identifier, username, status):
+    new_resource = copy.deepcopy(resource_template)
+    new_resource['PK0']['S'] = create_pk0(pk0_template=str(new_resource['PK0']['S']), customer=customer, username=username)
+    new_resource['PK1']['S'] = create_pk1(pk1_template=str(new_resource['PK1']['S']), customer=customer, status=status)
+    new_resource['PK2']['S'] = create_pk2(pk2_template=str(new_resource['PK2']['S']), customer=customer, identifier=identifier)
+    new_resource['PK3']['S'] = create_resource_key(template=str(new_resource['PK3']['S']), identifier=identifier)
+    new_resource['SK0']['S'] = create_resource_key(template=str(new_resource['SK0']['S']), identifier=identifier)
+    new_resource['SK1']['S'] = create_resource_key(template=str(new_resource['SK1']['S']), identifier=identifier)
+    new_resource['SK2']['S'] = create_resource_key(template=str(new_resource['SK2']['S']), identifier=identifier).replace('<resourceSort>', 'a')
+    new_resource['SK3']['S'] = create_resource_key(template=str(new_resource['SK3']['S']), identifier=identifier)
+    new_resource['type']['S'] = 'Resource'
+    return new_resource
+
+def create_publication_data(publication_template, test_publication, identifier, username, customer, status):
     new_publication = copy.deepcopy(publication_template)
-    new_publication['identifier']['S'] = str(uuid.uuid4())
+    new_publication['identifier']['S'] = identifier
     new_publication['entityDescription']['M']['mainTitle'][
         'S'] = test_publication['title']
     new_publication['entityDescription']['M']['reference']['M'][
@@ -173,13 +204,13 @@ def create_test_publication(publication_template, test_publication):
         'identifier']['S'] = file_dict[test_publication['file_name']]
     new_publication['fileSet']['M']['files']['L'][0]['M']['name'][
         'S'] = test_publication['file_name']
-    new_publication['owner']['S'] = test_publication['owner']
+    new_publication['owner']['S'] = username
     new_publication['publisher']['M']['id']['S'] = customer
     new_publication['publisherId']['S'] = customer
     new_publication['publisherOwnerDate'][
         'S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(
             customer, test_publication['owner'])
-    new_publication['status']['S'] = test_publication['status']
+    new_publication['status']['S'] = status
 
     if test_publication['contributor'] != '':
         contributor = test_publication['contributor']
@@ -189,9 +220,39 @@ def create_test_publication(publication_template, test_publication):
 
     return new_publication
 
+def create_test_publication(publication_template, resource_template, test_publication):
+    customer = get_customer(test_publication['owner'])
+    identifier = str(uuid.uuid4())
+    username = test_publication['owner']
+    status = test_publication['status']
+
+    new_resource = create_resource(
+        resource_template=resource_template, 
+        customer=customer, 
+        identifier=identifier, 
+        username=username, 
+        status=status
+    )
+
+    new_publication = create_publication_data(
+        publication_template=publication_template, 
+        test_publication=test_publication, 
+        identifier=identifier, 
+        username=username, 
+        customer=customer, 
+        status=status
+    )
+
+    new_resource['data']['M'] = new_publication
+
+    return new_resource
+
 def create_publications():
     with open(publication_template_file_name) as publication_template_file:
         publication_template = json.load(publication_template_file)
+
+    with open(resource_template_file_name) as resource_template_file:
+        resource_template = json.load(resource_template_file)
 
     with open(test_publications_file_name) as test_publications_file:
 
@@ -199,7 +260,8 @@ def create_publications():
         for test_publication in test_publications:
 
             new_publication = create_test_publication(
-                publication_template=publication_template, 
+                publication_template=publication_template,
+                resource_template=resource_template,
                 test_publication=test_publication
             )
             print(test_publication['title'])
