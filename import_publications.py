@@ -97,10 +97,10 @@ def scan_resources():
 def delete_publications():
     resources = scan_resources()
     for resource in resources:
-        if resource['type'] == 'Resource':
-            publication = resource['data']
-            primary_partition_key = resource['PK0']
-            primary_sort_key = resource['SK0']
+        if resource['type']['S'] == 'Resource':
+            publication = resource['data']['M']
+            primary_partition_key = resource['PK0']['S']
+            primary_sort_key = resource['SK0']['S']
             identifier = publication['identifier']['S']
             owner = publication['owner']['S']
             if 'test.no' in owner:
