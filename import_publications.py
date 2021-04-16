@@ -11,7 +11,8 @@ s3_client = boto3.client('s3')
 resource_template_file_name = './publications/resource.json'
 publication_template_file_name = './publications/publication.json'
 test_publications_file_name = './publications/test_publications.json'
-publications_tablename = 'nva_resources'
+# publications_tablename = 'nva_resources'
+publications_tablename = 'nva-resources-nva-publication-api-nva-publication-api'
 user_tablename = 'UsersAndRolesTable'
 person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
 
@@ -96,6 +97,7 @@ def scan_resources():
 
 def delete_publications():
     resources = scan_resources()
+    print(len(resources))
     for resource in resources:
         if resource['type']['S'] == 'Resource':
             publication = resource['data']['M']
@@ -221,7 +223,7 @@ def create_publication_data(publication_template, test_publication, identifier, 
     return new_publication
 
 def create_test_publication(publication_template, resource_template, test_publication):
-    customer = get_customer(test_publication['owner'])
+    customer = get_customer(test_publication['owner']).replace('https://api.dev.nva.aws.unit.no/customer/', '')
     identifier = str(uuid.uuid4())
     username = test_publication['owner']
     status = test_publication['status']
