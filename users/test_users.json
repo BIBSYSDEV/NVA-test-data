@@ -322,7 +322,9 @@
     "familyName": "TestUser",
     "givenName": "Connect ORCID",
     "username": "test-user-connect-orcid@test.no",
-    "role": ["CREATOR"],
+    "role": [
+      "CREATOR"
+    ],
     "author": false,
     "orcid": false,
     "affiliation": "[member, employee, staff]",
