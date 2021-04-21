@@ -18,8 +18,8 @@ def scan_customers():
 def delete_customers():
     customers = scan_customers()
     for customer in customers:
-        identifier = customer['identifier']['S']
-        if identifier.startswith('test_'):
+        archiveName = customer['archiveName']['S']
+        if 'created' in archiveName:
             response = client.delete_item(
                 TableName=customer_tablename,
                 Key={'identifier': {
