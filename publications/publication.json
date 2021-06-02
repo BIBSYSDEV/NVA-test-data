@@ -33,9 +33,6 @@
                   "name": {
                     "S": "Nilsen, Eirik"
                   },
-                  "orcId": {
-                    "S": "0000-0002-2764-1727"
-                  },
                   "type": {
                     "S": "Identity"
                   }
@@ -70,17 +67,11 @@
           }
         }
       },
-      "language": {
-        "S": "http://lexvo.org/id/iso639-3/eng"
-      },
       "mainTitle": {
         "S": "####################"
       },
       "reference": {
         "M": {
-          "doi": {
-            "S": ""
-          },
           "publicationContext": {
             "M": {
               "level": {

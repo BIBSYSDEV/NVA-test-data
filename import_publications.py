@@ -208,10 +208,6 @@ def create_publication_data(publication_template, test_publication, identifier, 
         'S'] = test_publication['file_name']
     new_publication['owner']['S'] = username
     new_publication['publisher']['M']['id']['S'] = customer
-    # new_publication['publisherId']['S'] = customer
-    # new_publication['publisherOwnerDate'][
-    #     'S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(
-    #         customer, test_publication['owner'])
     new_publication['status']['S'] = status
 
     if test_publication['contributor'] != '':
