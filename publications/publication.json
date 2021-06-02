@@ -13,7 +13,7 @@
                   {
                     "M": {
                       "id": {
-                        "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"
+                        "S": "https://api.cristin.no/v2/institutions/20202"
                       },
                       "type": {
                         "S": "Organization"
@@ -27,16 +27,22 @@
               },
               "identity": {
                 "M": {
-                  "arpId": {
-                    "S": "1592998838101"
+                  "id": {
+                    "S": "https://api.dev.nva.aws.unit.no/person/3055930"
                   },
                   "name": {
-                    "S": "TestUser, Withauthor"
+                    "S": "Nilsen, Eirik"
+                  },
+                  "orcId": {
+                    "S": "0000-0002-2764-1727"
                   },
                   "type": {
                     "S": "Identity"
                   }
                 }
+              },
+              "role": {
+                "S": "Creator"
               },
               "sequence": {
                 "N": "1"
@@ -199,12 +205,6 @@
         "S": "Organization"
       }
     }
-  },
-  "publisherId": {
-    "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"
-  },
-  "publisherOwnerDate": {
-    "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934#test@test.no#2020-01-01T00:00:00.000000Z"
   },
   "status": {
     "S": "DRAFT"

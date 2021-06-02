@@ -8,15 +8,15 @@ from os import listdir
 
 dynamodb_client = boto3.client('dynamodb')
 s3_client = boto3.client('s3')
+ssm = boto3.client('ssm')
 resource_template_file_name = './publications/resource.json'
 publication_template_file_name = './publications/publication.json'
 test_publications_file_name = './publications/test_publications.json'
-# publications_tablename = 'nva_resources'
-publications_tablename = 'nva-resources-nva-publication-api-nva-publication-api'
 user_tablename = 'UsersAndRolesTable'
 person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
 
-ssm = boto3.client('ssm')
+publications_tablename = ssm.get_parameter(Name='/test/RESOURCE_TABLE', 
+                                           WithDecryption=False)['Parameter']['Value'] 
 s3_bucket_name = ssm.get_parameter(Name='/test/RESOURCE_S3_BUCKET',
                                    WithDecryption=False)['Parameter']['Value']
 STAGE = ssm.get_parameter(Name='/test/STAGE',
@@ -208,10 +208,10 @@ def create_publication_data(publication_template, test_publication, identifier, 
         'S'] = test_publication['file_name']
     new_publication['owner']['S'] = username
     new_publication['publisher']['M']['id']['S'] = customer
-    new_publication['publisherId']['S'] = customer
-    new_publication['publisherOwnerDate'][
-        'S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(
-            customer, test_publication['owner'])
+    # new_publication['publisherId']['S'] = customer
+    # new_publication['publisherOwnerDate'][
+    #     'S'] = '{}#{}#2020-01-01T00:00:00.000000Z'.format(
+    #         customer, test_publication['owner'])
     new_publication['status']['S'] = status
 
     if test_publication['contributor'] != '':

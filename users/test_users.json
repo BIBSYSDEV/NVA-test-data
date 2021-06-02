@@ -343,5 +343,18 @@
     "affiliation": "[member, employee, staff]",
     "orgNumber": "1111111111",
     "cristinId": "https://api.cristin.no/v2/institutions/1111111111"
+  },
+  {
+    "familyName": "TestUser",
+    "givenName": "Draft DOI",
+    "username": "test-user-draft-doi@test.no",
+    "role": [
+      "CREATOR"
+    ],
+    "author": true,
+    "orcid": true,
+    "affiliation": "[member, employee, staff]",
+    "orgNumber": "919477822",
+    "cristinId": "https://api.cristin.no/v2/institutions/20202"
   }
 ]

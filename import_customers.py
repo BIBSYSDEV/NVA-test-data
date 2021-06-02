@@ -11,6 +11,7 @@ customer_tablename = 'nva_customers'
 
 def scan_customers():
     response = client.scan(TableName=customer_tablename)
+    print(response)
 
     return response['Items']
 
@@ -18,13 +19,14 @@ def scan_customers():
 def delete_customers():
     customers = scan_customers()
     for customer in customers:
-        archiveName = customer['archiveName']['S']
-        if 'created' in archiveName:
-            response = client.delete_item(
-                TableName=customer_tablename,
-                Key={'identifier': {
-                    'S': identifier
-                }})
+        if 'archiveName' in customer:
+            archiveName = customer['archiveName']['S']
+            if 'created' in archiveName:
+                response = client.delete_item(
+                    TableName=customer_tablename,
+                    Key={'identifier': {
+                        'S': identifier
+                    }})
     return
 
 
