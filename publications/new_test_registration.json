@@ -1,0 +1,49 @@
+{
+  "type" : "Publication",
+  "status" : "DRAFT",
+  "owner" : "<owner_id>",
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "<nva_org_url>"
+  },
+  "createdDate" : "2021-06-08T10:19:38.633284Z",
+  "modifiedDate" : "2021-06-08T11:46:42.963805Z",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "Test registration",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "2020",
+      "month" : "12",
+      "day" : "31"
+    },
+    "contributors" : [],
+    "tags" : [ "keyword" ],
+    "description" : "Description",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Journal",
+        "title" : "International Journal of Human-Computer Interaction",
+        "level" : "LEVEL_1",
+        "openAccess" : false,
+        "peerReviewed" : false,
+        "onlineIssn" : "1044-7318",
+        "url" : "http://www.erlbaum.com/Journals/journals/IJHCI/ijhci.htm"
+      },
+      "publicationInstance" : {
+        "type" : "JournalArticle",
+        "volume" : "1",
+        "issue" : "2",
+        "peerReviewed" : true,
+        "pages" : {
+          "type" : "Range",
+          "begin" : "3",
+          "end" : "4"
+        }
+      }
+    },
+    "abstract" : "Abstract"
+  },
+  "modelVersion" : "0.11.14"
+}

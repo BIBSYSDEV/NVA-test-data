@@ -1,0 +1,58 @@
+[
+  {
+    "Name": "custom:application",
+    "Value": "NVA"
+  },
+  {
+    "Name": "custom:applicationRoles",
+    "Value": "Publisher"
+  },
+  {
+    "Name": "custom:orgLegalName",
+    "Value": "TestOrg"
+  },
+  {
+    "Name": "custom:orgName",
+    "Value": "TestOrg"
+  },
+  {
+    "Name": "name",
+    "Value": "API test User"
+  },
+  {
+    "Name": "given_name",
+    "Value": "API test"
+  },
+  {
+    "Name": "family_name",
+    "Value": "User"
+  },
+  {
+    "Name": "custom:commonName",
+    "Value": "API test User"
+  },
+  {
+    "Name": "custom:orgNumber",
+    "Value": "1111111111"
+  },
+  {
+    "Name": "custom:cristinId",
+    "Value": "1111111111"
+  },
+  {
+    "Name": "custom:feideId",
+    "Value": "test-data-user@test.no"
+  },
+  {
+    "Name": "custom:feideTargetedId",
+    "Value": "test-data-user@test.no"
+  },
+  {
+    "Name": "email",
+    "Value": "test-data-user@test.no"
+  },
+  {
+    "Name": "custom:affiliation",
+    "Value": "[member, employee, staff]"
+  }
+]

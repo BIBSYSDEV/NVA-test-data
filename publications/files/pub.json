@@ -1,0 +1,112 @@
+{
+  "type": "Publication",
+  "identifier": "0179eb228500-d5ca5de6-c876-484c-8dbb-01ea076d5ba8",
+  "status": "DRAFT",
+  "owner": "test-user-with-author@test.no",
+  "publisher": {
+    "type": "Organization",
+    "id": "9c1c941f-c713-4900-8482-f7d2684fc630"
+  },
+  "createdDate": "2021-06-08T10:19:38.633284Z",
+  "modifiedDate": "2021-06-08T11:46:42.963805Z",
+  "entityDescription": {
+    "type": "EntityDescription",
+    "mainTitle": "Delete Draft registration",
+    "date": {
+      "type": "PublicationDate",
+      "year": "2020",
+      "month": "12",
+      "day": "31"
+    },
+    "contributors": [
+      {
+        "type": "Contributor",
+        "identity": {
+          "type": "Identity",
+          "id": "<nva_person_url>",
+          "name": "TestUser, With Author",
+          "orcId": "0000-0002-2764-1727"
+        },
+        "affiliations": [
+          {
+            "type": "Organization",
+            "id": "<cristin_inst_url>"
+          }
+        ],
+        "role": "Creator",
+        "sequence": 1,
+        "correspondingAuthor": false
+      },
+      {
+        "affiliations": [
+          {
+            "id": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934",
+            "type": "Organization"
+          },
+          {
+            "id": "20202.0.0.0",
+            "type": "Organization"
+          }
+        ],
+        "correspondingAuthor": false,
+        "email": "test-user-with-author@test.no",
+        "identity": {
+          "arpId": "https://api.dev.nva.aws.unit.no/person/1605776533871",
+          "name": "TestUser,Withauthor",
+          "type": "Identity"
+        },
+        "sequence": "1",
+        "type": "Contributor"
+      }
+    ],
+    "tags": ["keyword"],
+    "description": "Description",
+    "reference": {
+      "type": "Reference",
+      "publicationContext": {
+        "type": "Journal",
+        "title": "International Journal of Human-Computer Interaction",
+        "level": "LEVEL_1",
+        "openAccess": false,
+        "peerReviewed": false,
+        "onlineIssn": "1044-7318",
+        "url": "http://www.erlbaum.com/Journals/journals/IJHCI/ijhci.htm"
+      },
+      "publicationInstance": {
+        "type": "JournalArticle",
+        "volume": "1",
+        "issue": "2",
+        "peerReviewed": true,
+        "pages": { "type": "Range", "begin": "3", "end": "4" }
+      }
+    },
+    "abstract": "Abstract"
+  },
+  "fileSet": {
+    "type": "FileSet",
+    "files": [
+      {
+        "type": "File",
+        "identifier": "<nva file_id>",
+        "name": "test_file.pdf",
+        "mimeType": "application/pdf",
+        "size": 32404,
+        "license": {
+          "type": "License",
+          "identifier": "Utgivers betingelser",
+          "labels": { "nb": "Utgivers betingelser" }
+        },
+        "administrativeAgreement": false,
+        "publisherAuthority": true
+      }
+    ]
+  },
+  "projects": [
+    {
+      "type": "ResearchProject",
+      "id": "<nva_project_url>",
+      "name": "Pedagogisk bruk av automatiserte tester"
+    }
+  ],
+  "modelVersion": "0.11.14"
+}

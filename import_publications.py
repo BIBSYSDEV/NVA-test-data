@@ -4,27 +4,41 @@ import copy
 import uuid
 import requests
 import uuid
-from os import listdir
+import os
+import common
 
 dynamodb_client = boto3.client('dynamodb')
 s3_client = boto3.client('s3')
 ssm = boto3.client('ssm')
-resource_template_file_name = './publications/resource.json'
-publication_template_file_name = './publications/publication.json'
-test_publications_file_name = './publications/test_publications.json'
-user_tablename = 'UsersAndRolesTable'
-person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
-
-publications_tablename = ssm.get_parameter(Name='/test/RESOURCE_TABLE', 
-                                           WithDecryption=False)['Parameter']['Value'] 
+publications_tablename = ssm.get_parameter(Name='/test/RESOURCE_TABLE',
+                                           WithDecryption=False)['Parameter']['Value']
 s3_bucket_name = ssm.get_parameter(Name='/test/RESOURCE_S3_BUCKET',
                                    WithDecryption=False)['Parameter']['Value']
 STAGE = ssm.get_parameter(Name='/test/STAGE',
                           WithDecryption=False)['Parameter']['Value']
+USER_POOL_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_ID',
+                                 WithDecryption=False)['Parameter']['Value']
+CLIENT_ID = ssm.get_parameter(Name='/test/AWS_USER_POOL_WEB_CLIENT_ID',
+                              WithDecryption=False)['Parameter']['Value']
+publication_template_file_name = './publications/new_test_registration.json'
+test_publications_file_name = './publications/test_publications.json'
+user_tablename = 'UsersAndRolesTable'
+person_query = 'https://api.{}.nva.aws.unit.no/person/?name={} {}'
+user_endpoint = 'https://api.{}.nva.aws.unit.no/users-roles/users/{}'
+upload_endpoint = 'https://api.{}.nva.aws.unit.no/upload/{}'
+publication_endpoint = 'https://api.{}.nva.aws.unit.no/publication'.format(STAGE)
+upload_create = upload_endpoint.format(STAGE, 'create')
+upload_prepare = upload_endpoint.format(STAGE, 'prepare')
+upload_complete = upload_endpoint.format(STAGE, 'complete')
+username = 'test-data-user@test.no'
+test_file_name = 'publications/files/test_file.pdf'
+test_file_size = os.stat(test_file_name).st_size
+test_file_modified = os.stat(test_file_name).st_mtime
+test_file = open(test_file_name, 'rb').read()
+
 
 arp_dict = {}
 file_dict = {}
-
 
 def map_user_to_arp():
     with open('./users/test_users.json') as user_file:
@@ -44,43 +58,55 @@ def map_user_to_arp():
                     arp_dict[user['username']]['scn'] = query_response.json(
                     )[0]['id']
 
-
-def delete_files_from_s3():
-    s3_objects = s3_client.list_objects_v2(Bucket=s3_bucket_name)
-
-    if s3_objects['KeyCount'] > 0:
-        object_keys = []
-        files = listdir('./publications/files')
-        for s3_object in s3_objects['Contents']:
-            head = s3_client.head_object(Bucket=s3_bucket_name,
-                                         Key=s3_object['Key'])
-
-            filename = head['ContentDisposition'].replace('filename=',
-                                                          '').replace('"', '')
-            if filename in files:
-                object_keys.append({'Key': s3_object['Key']})
-
-        if(len(object_keys) > 0):
-            s3_client.delete_objects(Bucket=s3_bucket_name,
-                                     Delete={'Objects': object_keys})
+def upload_file(bearer_token):
+    print('upload file...')
+    headers = {
+      'Authorization': 'Bearer {}'.format(bearer_token),
+      'accept': 'application/pdf'
+    }
+    # create
+    print('create...')
+    response = requests.post(
+      upload_create, 
+      json={
+        'filename': 'test_file.pdf',
+        'size': 32404,
+        'lastmodified': 1353189358000,
+        'mimetype': 'application/pdf'
+      }, 
+      headers=headers)
+    uploadId = response.json()['uploadId']
+    key = response.json()['key']
+    # prepare
+    response = requests.post(
+      upload_prepare,
+      json={
+        'number': '1',
+        'uploadId': uploadId,
+        'body': str(test_file),
+        'key': key
+      },
+      headers=headers)
+    presignedUrl = response.json()['url']
+    # upload
+    response = requests.put(presignedUrl, headers = { 'Accept': 'appliation/pdf' }, data = test_file)
+    ETag = response.headers['ETag']
+    # complete
+    print('complete...')
+    response = requests.post(
+      upload_complete,
+      json={
+        'uploadId': uploadId,
+        'key': key,
+        'parts': [
+          {
+            'partNumber': '1',
+            'Etag': ETag
+          }
+        ]
+      },
+      headers=headers)
     return
-
-
-def add_files_to_s3():
-    files = listdir('./publications/files')
-    for import_file in files:
-        key = str(uuid.uuid4())
-        file_dict[import_file] = key
-        with open('./publications/files/{}'.format(import_file),
-                  'rb') as import_file_body:
-            s3_client.put_object(
-                Bucket=s3_bucket_name,
-                Key=key,
-                Body=import_file_body,
-                ContentDisposition='filename="{}"'.format(import_file),
-                ContentType='text/plain')
-    return
-
 
 def scan_resources():
     print('scanning resourcess')
@@ -97,7 +123,6 @@ def scan_resources():
 
 def delete_publications():
     resources = scan_resources()
-    print(len(resources))
     for resource in resources:
         if resource['type']['S'] == 'Resource':
             publication = resource['data']['M']
@@ -107,7 +132,7 @@ def delete_publications():
             owner = publication['owner']['S']
             if 'test.no' in owner:
                 print(
-                    'Deleting {} - {}'.format(publication['identifier']['S'], owner))
+                    'Deleting {} - {}'.format(identifier, owner))
                 try:
                     response = dynamodb_client.delete_item(
                         TableName=publications_tablename,
@@ -124,27 +149,22 @@ def delete_publications():
     return
 
 
-def put_item(new_publication):
-
-    try:
-        response = dynamodb_client.put_item(TableName=publications_tablename,
-                                            Item=new_publication)
-    except:
-        print(sys.exc_info()[0])
-    return response
+def put_item(new_publication, bearer_token):
+    headers = {
+      'Authorization': 'Bearer {}'.format(bearer_token),
+      'accept': 'application/json'
+    }
+    response = requests.post(publication_endpoint, json=new_publication, headers=headers)
 
 
-def get_customer(username):
-    response = dynamodb_client.get_item(TableName=user_tablename,
-                                        Key={
-                                            'PrimaryKeyHashKey': {
-                                                'S': 'USER#{}'.format(username)
-                                            },
-                                            'PrimaryKeyRangeKey': {
-                                                'S': 'USER#{}'.format(username)
-                                            },
-                                        })
-    return response['Item']['institution']['S']
+def get_customer(username, bearer_token):
+    headers = {
+      'Authorization': 'Bearer {}'.format(bearer_token),
+      'accept': 'application/json'
+    }
+    response = requests.get(user_endpoint.format(STAGE, username), headers=headers)
+    return response.json()['institution']
+
 
 def create_contributor(contributor):
     with open('./publications/contributors.json'
@@ -152,105 +172,48 @@ def create_contributor(contributor):
         contributor_template = json.load(contributor_template_file)
 
         new_contributor = copy.deepcopy(contributor_template)
-        new_contributor['M']['email']['S'] = contributor
-        new_contributor['M']['identity']['M']['arpId'][
-            'S'] = arp_dict[contributor]['scn']
-        new_contributor['M']['identity']['M']['name'][
-            'S'] = '{},{}'.format(
+        new_contributor['email'] = contributor
+        new_contributor['identity']['id'] = arp_dict[contributor]['scn']
+        new_contributor['identity']['name'] = '{},{}'.format(
                 arp_dict[contributor]['familyName'],
                 arp_dict[contributor]['givenName'])
-
         return new_contributor
 
-def create_pk0(pk0_template, customer, username):
-    pk0 = pk0_template.replace('<type>', 'Resource').replace('<customerId>', customer).replace('<userId>', username)
-    return pk0
 
-def create_pk1(pk1_template, customer, status):
-    pk1 = pk1_template.replace('<type>', 'Resource').replace('<customerId>', customer).replace('<status>', status)
-    return pk1
-
-def create_pk2(pk2_template, customer, identifier):
-    pk2 = pk2_template.replace('<type>', 'Resource').replace('<customerId>', customer).replace('<resourceId>', identifier)
-    return pk2
-
-def create_resource_key(template, identifier):
-    key = template.replace('<type>', 'Resource').replace('<resourceId>', identifier)
-    return key
-
-def create_resource(resource_template, customer, identifier, username, status):
-    new_resource = copy.deepcopy(resource_template)
-    new_resource['PK0']['S'] = create_pk0(pk0_template=str(new_resource['PK0']['S']), customer=customer, username=username)
-    new_resource['PK1']['S'] = create_pk1(pk1_template=str(new_resource['PK1']['S']), customer=customer, status=status)
-    new_resource['PK2']['S'] = create_pk2(pk2_template=str(new_resource['PK2']['S']), customer=customer, identifier=identifier)
-    new_resource['PK3']['S'] = create_resource_key(template=str(new_resource['PK3']['S']), identifier=identifier)
-    new_resource['SK0']['S'] = create_resource_key(template=str(new_resource['SK0']['S']), identifier=identifier)
-    new_resource['SK1']['S'] = create_resource_key(template=str(new_resource['SK1']['S']), identifier=identifier)
-    new_resource['SK2']['S'] = create_resource_key(template=str(new_resource['SK2']['S']), identifier=identifier).replace('<resourceSort>', 'a')
-    new_resource['SK3']['S'] = create_resource_key(template=str(new_resource['SK3']['S']), identifier=identifier)
-    new_resource['type']['S'] = 'Resource'
-    return new_resource
-
-def create_publication_data(publication_template, test_publication, identifier, username, customer, status):
+def create_publication_data(publication_template, test_publication, username, customer, status):
     new_publication = copy.deepcopy(publication_template)
-    new_publication['identifier']['S'] = identifier
-    new_publication['entityDescription']['M']['mainTitle'][
-        'S'] = test_publication['title']
-    new_publication['entityDescription']['M']['reference']['M'][
-        'publicationContext']['M']['type']['S'] = test_publication[
-            'publication_context_type']
-    new_publication['entityDescription']['M']['reference']['M'][
-        'publicationInstance']['M']['type']['S'] = test_publication[
-            'publication_instance_type']
-    new_publication['fileSet']['M']['files']['L'][0]['M'][
-        'identifier']['S'] = file_dict[test_publication['file_name']]
-    new_publication['fileSet']['M']['files']['L'][0]['M']['name'][
-        'S'] = test_publication['file_name']
-    new_publication['owner']['S'] = username
-    new_publication['publisher']['M']['id']['S'] = customer
-    new_publication['status']['S'] = status
+    new_publication['entityDescription']['mainTitle'] = test_publication['title']
+    new_publication['entityDescription']['reference']['publicationContext']['type'] = test_publication['publication_context_type']
+    new_publication['entityDescription']['reference']['publicationInstance']['type'] = test_publication['publication_instance_type']
+    new_publication['owner'] = username
+    new_publication['publisher']['id'] = customer
+    new_publication['status'] = status
 
     if test_publication['contributor'] != '':
         contributor = test_publication['contributor']
         new_contributor = create_contributor(contributor=contributor)
-        new_publication['entityDescription']['M']['contributors'][
-            'L'].append(new_contributor)
+        new_publication['entityDescription']['contributors'].append(new_contributor)
 
     return new_publication
 
-def create_test_publication(publication_template, resource_template, test_publication):
-    customer = get_customer(test_publication['owner']).replace('https://api.dev.nva.aws.unit.no/customer/', '')
-    identifier = str(uuid.uuid4())
+def create_test_publication(publication_template, test_publication, bearer_token):
+    customer = get_customer(test_publication['owner'], bearer_token=bearer_token).replace('https://api.dev.nva.aws.unit.no/customer/', '')
     username = test_publication['owner']
     status = test_publication['status']
 
-    new_resource = create_resource(
-        resource_template=resource_template, 
-        customer=customer, 
-        identifier=identifier, 
-        username=username, 
-        status=status
-    )
-
     new_publication = create_publication_data(
-        publication_template=publication_template, 
-        test_publication=test_publication, 
-        identifier=identifier, 
-        username=username, 
-        customer=customer, 
+        publication_template=publication_template,
+        test_publication=test_publication,
+        username=username,
+        customer=customer,
         status=status
     )
 
-    new_resource['data']['M'] = new_publication
+    return new_publication
 
-    return new_resource
-
-def create_publications():
+def create_publications(bearer_token):
     with open(publication_template_file_name) as publication_template_file:
         publication_template = json.load(publication_template_file)
-
-    with open(resource_template_file_name) as resource_template_file:
-        resource_template = json.load(resource_template_file)
 
     with open(test_publications_file_name) as test_publications_file:
 
@@ -259,21 +222,21 @@ def create_publications():
 
             new_publication = create_test_publication(
                 publication_template=publication_template,
-                resource_template=resource_template,
-                test_publication=test_publication
+                test_publication=test_publication,
+                bearer_token=bearer_token
             )
             print(test_publication['title'])
-            put_item(new_publication)
+            put_item(new_publication=new_publication, bearer_token=bearer_token)
 
 
 def run():
     print('publications...')
+    bearer_token = common.login()
     map_user_to_arp()
-    delete_files_from_s3()
-    add_files_to_s3()
+    # upload_file(bearer_token)
 
     delete_publications()
-    create_publications()
+    create_publications(bearer_token=bearer_token)
 
 
 if __name__ == '__main__':

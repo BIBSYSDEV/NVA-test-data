@@ -1,53 +1,21 @@
 {
-  "M": {
-    "affiliations": {
-      "L": [
-        {
-          "M": {
-            "id": {
-              "S": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934"
-            },
-            "type": {
-              "S": "Organization"
-            }
-          }
-        },
-        {
-          "M": {
-            "id": {
-              "S": "20202.0.0.0"
-            },
-            "type": {
-              "S": "Organization"
-            }
-          }
-        }
-      ]
+  "affiliations": [
+    {
+      "id": "https://api.sandbox.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934",
+      "type": "Organization"
     },
-    "correspondingAuthor": {
-      "BOOL": true
-    },
-    "email": {
-      "S": "####################"
-    },
-    "identity": {
-      "M": {
-        "arpId": {
-          "S": "#####################"
-        },
-        "name": {
-          "S": "#####################"
-        },
-        "type": {
-          "S": "Identity"
-        }
-      }
-    },
-    "sequence": {
-      "N": "1"
-    },
-    "type": {
-      "S": "Contributor"
+    {
+      "id": "20202.0.0.0",
+      "type": "Organization"
     }
-  }
+  ],
+  "correspondingAuthor": true,
+  "email": "####################",
+  "identity": {
+    "id": "#####################",
+    "name": "#####################",
+    "type": "Identity"
+  },
+  "sequence": "1",
+  "type": "Contributor"
 }
